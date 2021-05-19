@@ -28,7 +28,8 @@
                 </p>
                 <table class="table table-bordered table-striped">
                     <tr>
-                        <th>Member ID</th>  
+                        <th>Member ID</th>
+                        <th>Title</th>
                         <th>Name</th>
                         <th>Monthly Savings.</th>
                         <th>Date Joined</th> 
@@ -37,10 +38,11 @@
                     @foreach($members as $m)
                     <tr>
                         <td>{{$m->member_id}}</td>
+                        <td>{{$m->title}}</td>
                         <td>{{$m->firstname}}</td>
                         <td>{{$m->savings_amount}}</td>
                         <td>{{$m->joined_date}}</td>
-                        <td><a href="#" class="btn btn-info">Edit</a>  <a href="#" class="btn btn-danger">Terminate</a></td>
+                        <td><a href="{{route('members.edit',$m->member_id) }}" class="btn btn-info">Edit</a>  <a href="#" class="btn btn-danger">Terminate</a></td>
                     </tr>
                     @endforeach
                 </table>
