@@ -27,6 +27,17 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('/admin/members', App\Http\Controllers\Admin\MembersController::class);
+Route::resource('/admin/company', App\Http\Controllers\Admin\CompaniesController::class);
+Route::get('/findMembers', [App\Http\Controllers\Admin\LoansController::class, 'getMember']);
+Route::resource('/admin/loans', App\Http\Controllers\Admin\LoansController::class);
+Route::resource('/admin/branch', App\Http\Controllers\Admin\branch_locationsController::class);
+Route::resource('/admin/orders', App\Http\Controllers\Admin\OrdersController::class);
+
+Route::get('search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
+Route::get('autocomplete', [App\Http\Controllers\SearchController::class, 'autocomplete'])->name('autocomplete');
+
+Route::get('admin/invoice/create',[App\Http\Controllers\InvoiceController::class,'create'])->name('create');
+Route::get('admin/api/product', [App\Http\Controllers\InvoiceController::class, 'getAutocompleteData'])->name('product');
 
 
 Route::get('/admin', function () {

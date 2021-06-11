@@ -27,14 +27,15 @@
             <div class="card-header">
                 <h3 class="card-title">Member registration Form</h3>
             </div>
-            <form method="post" action="{{route('members.store')}}" enctype="multipart/form-data">
+
+            <form onsubmit="return confirm('Click OK Submit Record to Database');" method="post" action="{{route('members.store')}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 <!-- SELECT2 EXAMPLE -->
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col-sm-6 col-sm-offset-1">
+                        <div class="col-sm-5 col-sm-offset-1">
                             <div style="position: relative; cursor: pointer; text-align: center;">
                                 <div style="width: 106px; height: 106px;
                                               background-color: #999999;
@@ -57,7 +58,7 @@
                                 <h6>Choose Picture</h6>
                             </div>
                         </div>
-                        <div class="col-md-5">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Title</label>
                                 <select class="form-control select2" name="title" style="width: 100%;">
@@ -71,6 +72,12 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="bmd-label-floating">Members No:</label>
+                                <input type="text" class="form-control" name="member_no">
+                            </div>
+                        </div>
 
                     </div>
 
@@ -78,7 +85,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Fist Name</label>
-                                <input type="text" class="form-control" name="firstname">
+                                <input type="text" class="form-control" name="firstName">
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -99,7 +106,11 @@
                             <div class="form-group">
                                 <label>Company</label>
                                 <select class="form-control select2" style="width: 100%;" name="company">
-                                    <option selected="selected">Media Trust</option>
+                                    <option value="">Select Company</option>
+                                    @foreach ($company as $c)
+                                        <option value="{{$c->company_id}}">{{$c->company_name}}</option>
+
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -125,10 +136,11 @@
                             <div class="form-group">
                                 <label>Branch Location:</label>
                                 <select class="form-control select2" name="Location">
-                                    <option value="1" selected>Abuja</option>
-                                    <option value="2">Lagos</option>
-                                    <option value="2">Kano</option>
-                                    <option value="2">Kaduna</option>
+                                    <option value="">Select Branch</option>
+                                    @foreach ($branch as $b)
+                                        <option value="{{$b->id}}">{{$b->branch}}</option>
+
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -157,8 +169,8 @@
                             <div class="form-group">
                                 <label>Gender:</label>
                                 <select class="form-control select2" name="gender">
-                                    <option value="1" selected>Male</option>
-                                    <option value="2">Female</option>
+                                    <option value="Male" selected>Male</option>
+                                    <option value="Male">Female</option>
                                 </select>
                             </div>
                         </div>
@@ -171,7 +183,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                     <div class="row">
                         <div class="col-sm-8">
@@ -183,16 +195,16 @@
                         </div>
                         <div class="form-group col-sm-4">
                             <label>Date Joined:</label>
-                            <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                <input type="text" name="joined_date" class="form-control datetimepicker-input" data-target="#reservationdate" />
-                                <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                            <div class="input-group date" id="reservationdate1" data-target-input="nearest">
+                                <input type="text" name="joined_date" class="form-control datetimepicker-input" data-target="#reservationdate1" />
+                                <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-sm-4">
+                        <div class="col-sm-4">
                             <label class="bmd-label-floating">Membership Charges</label>
                             &nbsp;&nbsp;&nbsp; Yes <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="yesCheck"> No <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="noCheck"><br>
                             <div id="ifYes" style="visibility:hidden">
@@ -201,12 +213,12 @@
                             </div>
 
 
-                            <!-- checkbox 
+                            <!-- checkbox
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
 
-                                <label for="customCheckbox1" class="custom-control-label">Membership Charges</label> 
-                            
+                                <label for="customCheckbox1" class="custom-control-label">Membership Charges</label>
+
                             Membership Charges: <input type="checkbox" id="myCheck" onclick="myFunction()">
 
 
@@ -229,20 +241,15 @@
                                 <input type="text" class="form-control" name="BankAcc_no">
                             </div>
                         </div>
-                    
                     </div>
-
-
                     <div class="form-group">
-                        <input type="submit" class="btn btn-info" value="Save">
+                        <input type="submit" onclick="callsweetalert(e);" class="btn btn-info" value="Save">
                     </div>
-
-
                 </div>
-        </div>
 
-        </form>
-    </div>
+
+            </form>
+        </div>
 
 
     </div>

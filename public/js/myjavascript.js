@@ -4,7 +4,7 @@ function myFunction() {
     var checkBox = document.getElementById("myCheck");
     // Get the output text
     var text = document.getElementById("text");
-  
+
     // If the checkbox is checked, display the output text
     if (checkBox.checked == true){
       text.style.display = "block";
@@ -25,7 +25,7 @@ function myFunction() {
         document.getElementById('ifYes').style.visibility = 'hidden';
     document.getElementById('ifYes').value = '';
     }
-   
+
 
 }
 
@@ -33,3 +33,13 @@ function myFunction() {
 $('#reservationdate').datetimepicker({
     format: 'L'
 });
+
+ //Date picker
+ $('#reservationdate1').datetimepicker({
+    format: 'L'
+});
+
+function callsweetalert(e) {
+
+}
+

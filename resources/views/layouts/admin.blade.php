@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--Import materialize.css-->
+ <!-- <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/> -->
+  <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">-->
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -14,6 +19,7 @@
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- iCheck -->
+
   <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- JQVMap -->
   <link rel="stylesheet" href="{{ asset('plugins/jqvmap/jqvmap.min.css') }}">
@@ -25,13 +31,14 @@
   <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/mystyle.css') }}">
   <!-- Scripts -->
 	<script src="{{ asset('js/myjavascript.js') }}" defer></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader 
+  <!-- Preloader
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="{{ asset('img/coop_logo.jpeg') }}" alt="AdminLTELogo" height="60" width="60">
   </div> -->
@@ -145,11 +152,6 @@
           <a href="#" class="dropdown-item">
             <i class="fas fa-envelope mr-2"></i> 4 new messages
             <span class="float-right text-muted text-sm">3 mins</span>
-          </a>          
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
@@ -195,38 +197,39 @@
                with font-awesome or any other icon font library -->
                <?php
                 $segment = Request::segment(2);
-                
+                $segment1 = Request::segment(3);
+
                ?>
           <li class="nav-item menu-open">
-            <a href="{{route('home')}}" class="nav-link 
-            @if(!$segment) 
+            <a href="{{route('home')}}" class="nav-link
+            @if(!$segment)
             active
             @endif
             ">
-            
+
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
               </p>
             </a>
           </li>
-          
+
           <li class="nav-item">
             <a href="#" class="nav-link
-            @if($segment=='members') 
+            @if($segment=='members')
             active
             @endif">
               <i class="nav-icon fas fa-copy"></i>
               <p>
               Cooperative Members
                 <i class="fas fa-angle-left right"></i>
-                
+
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="{{route('members.create')}}" class="nav-link
-                @if($segment=='members') 
+                @if($segment=='members' && $segment1=='create')
             active
             @endif">
                   <i class="far fa-circle nav-icon"></i>
@@ -235,7 +238,7 @@
               </li>
               <li class="nav-item">
                 <a href="{{ route('members.index')}}" class="nav-link
-                @if($segment=='members') 
+                @if($segment=='members'&& $segment1=='index')
             active
             @endif
                 ">
@@ -245,7 +248,7 @@
               </li>
               <li class="nav-item">
                 <a href="pages/layout/top-nav-sidebar.html" class="nav-link
-                @if($segment=='members') 
+                @if($segment=='members')
             active
             @endif
                 ">
@@ -255,55 +258,248 @@
               </li>
             </ul>
           </li>
-          
+
           <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-circle"></i>
+              <i class="nav-icon fas fa-copy"></i>
               <p>
                 Loans
-                <i class="right fas fa-angle-left"></i>
+                <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
-              
+
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('loans.create')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>
-                    Level 2
-                    <i class="right fas fa-angle-left"></i>
+                    Loan Application
+
                   </p>
                 </a>
-                <ul class="nav nav-treeview">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">
-                      <i class="far fa-dot-circle nav-icon"></i>
-                      <p>Level 3</p>
-                    </a>
-                  </li>
-                </ul>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Level 2</p>
+                  <p>Loans Managemrt</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Loans Cash Payments</p>
                 </a>
               </li>
             </ul>
           </li>
-          
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Cash Withdrawers
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{route('loans.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Cash Withdrawers
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cash Withdrawer Adjustment</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Cash Deposits
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{route('loans.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Cash Deposits
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cash Deposit Adjustment</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Receivables
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{route('loans.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    Cash Receipts
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Receipts Adjustment</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Payables
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{route('loans.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    New Payments
+
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Payments Adjustment</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+                Comodities
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+
+              <li class="nav-item">
+                <a href="{{route('orders.create')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>
+                    New Order
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Manage Comodities</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+
+          <li class="nav-item">
+            <a href="#" class="nav-link
+            @if($segment=='setups')
+            active
+            @endif">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+              Setups
+                <i class="fas fa-angle-left right"></i>
+
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('company.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Create Company</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('branch.index')}}" class="nav-link
+                @if($segment=='setups')
+            active
+            @endif
+                ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Branch</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link
+            @if($segment=='setups')
+            active
+            @endif">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>
+              Reports
+                <i class="fas fa-angle-left right"></i>
+
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('company.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Loans Report</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link
+                @if($segment=='setups')
+            active
+            @endif
+                ">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Cash Deposit Report</p>
+                </a>
+              </li>
+
+            </ul>
+          </li>
+
           <li class="nav-header">Action</li>
           <li class="nav-item">
           <a class="nav-link" href="{{ route('logout') }}"
@@ -317,9 +513,9 @@
                                         @csrf
                                     </form>
 
-            
+
           </li>
-          
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -378,12 +574,18 @@
 <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('dist/js/adminlte.js') }}"></script>
+<script src="{{ asset('js/sweetalert.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 
 <script>
+
+
+
+    //Date range picker
+    $('#reservation').daterangepicker()
 
 
             // Prepare the preview for profile picture
@@ -404,5 +606,107 @@
                 }
             }
             </script>
+
+<script>
+       //@if(session('message'))
+             //            alert('{{session('message')}}');
+              //     @endif
+
+                    @if(session('message'))
+                        swal("Success","{{session('message')}}","success",{
+                           button:"Done",
+                        })
+                    @endif
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+     $(document).ready(function(){
+
+      $.ajax({
+      type:'get',
+      url:'http://localhost:8000/findMembers',
+      success:function(response){
+          console.log(response);
+
+          var MembArray = response;
+          var dataMemb = {};
+          var dataMemb2 = {};
+          for (var i =0; i < MembArray.length; i++){
+              dataMemb[MembArray[i].member_name] =null;
+              dataMemb2[MembArray[i].member_name] =MembArray[i];
+          }
+          console.log("dataMemb2");
+          console.log(dataMemb2);
+
+$('input#autocomplete-input').autocomplete({
+data:  dataMemb,
+onAutocomplete:function(reqdata){
+    console.log(reqdata);
+    $('#member_id').val(dataMemb2[reqdata]['member_id']);
+}
+});
+      }
+  })
+});
+</script>
+
+
+<script>
+    $(document).ready(function(){
+        var i=1;
+        $("#add_row").click(function(){b=i-1;
+              $('#addr'+i).html($('#addr'+b).html()).find('td:first-child').html(i+1);
+              $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
+              i++;
+          });
+        $("#delete_row").click(function(){
+            if(i>1){
+            $("#addr"+(i-1)).html('');
+            i--;
+            }
+            calc();
+        });
+
+        $('#tab_logic tbody').on('keyup change',function(){
+            calc();
+        });
+        $('#tax').on('keyup change',function(){
+            calc_total();
+        });
+
+
+    });
+
+    function calc()
+    {
+        $('#tab_logic tbody tr').each(function(i, element) {
+            var html = $(this).html();
+            if(html!='')
+            {
+                var qty = $(this).find('.qty').val();
+                var price = $(this).find('.price').val();
+                $(this).find('.total').val(qty*price);
+
+                calc_total();
+            }
+        });
+    }
+
+    function calc_total()
+    {
+        total=0;
+        $('.total').each(function() {
+            total += parseInt($(this).val());
+        });
+        $('#sub_total').val(total.toFixed(2));
+        tax_sum=total/100*$('#tax').val();
+        $('#tax_amount').val(tax_sum.toFixed(2));
+        $('#total_amount').val((tax_sum+total).toFixed(2));
+    }
+
+    </script>
+
+
 </body>
 </html>
