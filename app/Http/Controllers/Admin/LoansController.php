@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use app\Models\loans;
+use App\Models\Loans_type;
 use App\Models\members;
+use App\Models\period;
 
 class LoansController extends Controller
 {
@@ -31,7 +33,10 @@ class LoansController extends Controller
      */
     public function create()
     {
-        return view('admin.loans.create');
+        $arr['loans_type'] = Loans_type::all();
+        $arr['period'] = period::select(['period_id','period_description'])
+        ->where('status', '1')->get();
+        return view('admin.loans.create')->with($arr);
     }
 
     /**
