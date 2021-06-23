@@ -9,14 +9,14 @@ class Members extends Model
 {
     use HasFactory;
 
-    public function company()
+    public function Company()
     {
-        $this->belongsTo('App\Models\company');
+     return $this->belongsTo(company::class);
     }
 
     public function branch_location()
     {
-       return $this->belongsTo('App\Models\branch_location');
+       return $this->belongsTo(branch_location::class, 'LocationID', 'id');
     }
 
     protected $primaryKey = 'member_id';
@@ -27,11 +27,11 @@ class Members extends Model
 
     protected $fillable = [
 
-        'member_no',
-      'firstName',
+       'member_no',
+       'firstName',
        'middleName',
-      'surName',
-      'member_name',
+       'surName',
+       'member_name',
        'savings_amount',
        'posted_date',
        'LocationID',
@@ -49,7 +49,7 @@ class Members extends Model
        'BankID',
        'BankAcc_no',
        'photo',
-     'posted_by',
+       'posted_by',
        'title',
 
     ];

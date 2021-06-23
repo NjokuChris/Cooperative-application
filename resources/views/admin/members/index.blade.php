@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+
+
 @section('content')
    <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -26,12 +28,12 @@
                 <a href="{{route('members.create')}}" class="btn btn-primary">New Member Registration</a>
                 </p>
 
-                <table class="table table-bordered table-striped">
+                <table class="table table-bordered table-striped" id="myTable">
                     <tr>
                         <th>Member ID</th>
                         <th>Title</th>
                         <th>Name</th>
-                        <th>compay</th>
+                        <th>Branch</th>
                         <th>Monthly Savings.</th>
                         <th>Date Joined</th>
                         <th>Action</th>
@@ -41,7 +43,7 @@
                         <td>{{$m->member_id}}</td>
                         <td>{{$m->title}}</td>
                         <td>{{$m->member_name}}</td>
-                        <td>{{$m->company}}</td>
+                        <td>{{$m->branch_location->branch}}</td>
                         <td>{{$m->savings_amount}}</td>
                         <td>{{$m->joined_date}}</td>
                         <td><a href="{{route('members.edit',$m->member_id) }}" class="btn btn-info">Edit</a>  <a href="#" class="btn btn-danger">Terminate</a></td>
@@ -51,3 +53,5 @@
             </div>
         </section>
     @endsection
+
+

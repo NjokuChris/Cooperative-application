@@ -24,7 +24,7 @@ class MembersController extends Controller
     public function index()
     {
         $arr['members'] = Members::all();
-        return view('admin.members.index')->with($arr);
+        return view('members')->with($arr);
     }
 
     /**

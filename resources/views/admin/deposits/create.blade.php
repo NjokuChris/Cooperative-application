@@ -8,12 +8,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Cash Withdrawer</h1>
+                    <h1 class="m-0">Cash Deposit</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-                        <li class="breadcrumb-item">Cash Withdrawer</li>
+                        <li class="breadcrumb-item">Cash Deposit</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -26,9 +26,9 @@
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Cash Withdrawer Form</h3>
+                    <h3 class="card-title">Cash Deposit Form</h3>
                 </div>
-                <form method="post" action="{{ route('withdrawers.store') }}" enctype="multipart/form-data">
+                <form method="post" action="{{ route('deposit.store') }}" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <!-- SELECT2 EXAMPLE -->
@@ -65,7 +65,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">Withdrawer Amount</label>
+                                    <label class="bmd-label-floating">Deposit Amount</label>
                                     <input type="text" class="form-control" name="company_name">
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">Withdrawer Date</label>
+                                    <label class="bmd-label-floating">Deposit Date</label>
                                     <input type="text" class="form-control" name="company_code">
                                 </div>
                             </div>
