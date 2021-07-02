@@ -38,7 +38,7 @@
                             <div>
                                 <div class="col-md-5">
                                     <div class="input-field form-group">
-                                        <label class="bmd-label-floating">Members Name</label>
+                                        <label class="bmd-label-floating">Customer Name</label>
                                         <input type="text" id="autocomplete-input" class="autocomplete">
                                     </div>
                                 </div>

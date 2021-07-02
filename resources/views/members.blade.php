@@ -30,6 +30,9 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+        <p>
+            <a href="{{route('company.create')}}" class="btn btn-primary">Create New Company</a>
+            </p>
         <div class="row">
           <div class="col-12">
 
@@ -46,35 +49,39 @@
                   <tr>
                     <th>Member ID</th>
                     <th>Title</th>
-                    <th>Title</th>
                     <th>Name</th>
-                    <th>Title</th>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Name</th>
-                    <th>Title</th>
-                    <th>Name</th>
-                    <th>Branch</th>
+                    <th>Savings Amount</th>
+                    <th>Location</th>
+                    <th>Date joined</th>
                     <th>Action</th>
-
                   </tr>
                   </thead>
                   <tbody>
-
                     @foreach($members as $m)
                     <tr>
                         <td>{{$m->member_id}}</td>
                         <td>{{$m->title}}</td>
-                        <td>{{$m->title}}</td>
                         <td>{{$m->member_name}}</td>
-                        <td>{{$m->title}}</td>
-                        <td>{{$m->title}}</td>
-                        <td>{{$m->member_name}}</td>
-                        <td>{{$m->title}}</td>
-                        <td>{{$m->member_name}}</td>
-                        <td>{{$m->member_name}}</td>
+                        <td>{{$m->savings_amount}}</td>
+                        <td>{{$m->branch}}</td>
                         <td>{{$m->joined_date}}</td>
-                        <td><a href="{{route('members.edit',$m->member_id) }}" class="btn btn-info">Edit</a>   <a href="#" class="btn btn-danger">Terminate</a></td>
+                        <td>
+                            <div class="dropdown show">
+                                <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Action
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a href="{{route('members.edit',$m->member_id) }}" class="dropdown-item">
+                                        <i class="nav-icon fas fa-copy" style="color: blue"></i>
+                                        Edit</a>
+                                    <a href="#" class="dropdown-item">
+                                        <i class="nav-icon fas fa-cut" style="color: red"></i>
+                                        Terminate</a>
+                                </div>
+                              </div>
+                        </td>
+
                     </tr>
                     @endforeach
 
@@ -83,17 +90,12 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>Member ID</th>
-                    <th>Title</th>
-                    <th>Title</th>
-                    <th>Name</th>
-                    <th>Title</th>
+                    <<th>Member ID</th>
                     <th>Title</th>
                     <th>Name</th>
-                    <th>Title</th>
-                    <th>Name</th>
-                    <th>Name</th>
-                    <th>Branch</th>
+                    <th>Savings Amount</th>
+                    <th>Location</th>
+                    <th>Date joined</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>

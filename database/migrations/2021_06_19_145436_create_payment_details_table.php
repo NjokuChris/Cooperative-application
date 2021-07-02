@@ -15,6 +15,16 @@ class CreatePaymentDetailsTable extends Migration
     {
         Schema::create('payment_details', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('payments_id');
+            $table->foreign('payments_id')->references('id')->on('payments');
+            $table->unsignedInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->integer('cost_center_id');
+            $table->foreign('cost_center_id')->references('id')->on('cost_center');
+            $table->string('account_no');
+            $table->float('price');
+            $table->integer('quantity');
+            $table->text('description');
             $table->timestamps();
         });
     }

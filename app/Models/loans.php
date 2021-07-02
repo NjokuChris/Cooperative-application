@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class loans extends Model
+class Loans extends Model
 {
     use HasFactory;
 
@@ -17,5 +17,10 @@ class loans extends Model
     public function period()
     {
         return $this->belongsTo(period::class);
+    }
+
+    public function loans_schedule()
+    {
+        return $this->hasMany(loans_schedule::class);
     }
 }

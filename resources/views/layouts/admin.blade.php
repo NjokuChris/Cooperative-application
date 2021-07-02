@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Dashboard</title>
+    <title>MTL Cooperatives</title>
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
@@ -19,7 +19,8 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Tempusdominus Bootstrap 4 -->
-    <link rel="stylesheet" href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
     <!-- iCheck -->
 
     <link rel="stylesheet" href="{{ asset('plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
@@ -246,13 +247,7 @@
                                         <p>Manage Member</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="pages/layout/top-nav-sidebar.html" class="nav-link
-                @if ($segment=='members' ) active @endif ">
-                  <i class=" far fa-circle nav-icon"></i>
-                                        <p>View Cooperative Members</p>
-                                    </a>
-                                </li>
+
                             </ul>
                         </li>
 
@@ -276,17 +271,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('loans.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Loans Managemrt</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Loans Cash Payments</p>
-                                    </a>
-                                </li>
+
                             </ul>
                         </li>
 
@@ -312,7 +302,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('withdrawers.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Managen Cash Withdrawer</p>
+                                        <p>Manage Withdrawers</p>
                                     </a>
                                 </li>
                             </ul>
@@ -338,9 +328,9 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('deposit.create') }}" class="nav-link">
+                                    <a href="{{ route('deposit.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Cash Deposit Adjustment</p>
+                                        <p>Manage Cash Deposits</p>
                                     </a>
                                 </li>
                             </ul>
@@ -368,7 +358,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('receipt.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Receipts Adjustment</p>
+                                        <p>Manage Receipts</p>
                                     </a>
                                 </li>
                             </ul>
@@ -396,7 +386,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('payments.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Payments Adjustment</p>
+                                        <p>Manage Payments</p>
                                     </a>
                                 </li>
                             </ul>
@@ -446,6 +436,12 @@
                                     <a href="{{ route('company.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Create Company</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('accounts.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>accounts</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
@@ -515,7 +511,7 @@
         </div>
         <!-- /.content-wrapper -->
         <footer class="main-footer">
-            <strong>Copyright &copy; 2014-2021 <a href="#">Chris</a>.</strong>
+            <strong>Copyright &copy; 2021 <a href="#">Chris</a>.</strong>
             All rights reserved.
             <div class="float-right d-none d-sm-inline-block">
                 <b>Version</b> 3.1.0
@@ -537,7 +533,6 @@
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
         $.widget.bridge('uibutton', $.ui.button)
-
     </script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
@@ -586,7 +581,6 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
     </script>
 
     <script>
@@ -599,38 +593,7 @@
             button:"Done",
             })
         @endif
-
     </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script>
-         $(document).ready(function(){
-          $.ajax({
-          type:'get',
-          url:'http://localhost:8000/findMembers',
-          success:function(response){
-              console.log(response);
-              var MembArray = response;
-              var dataMemb = {};
-              var dataMemb2 = {};
-              for (var i =0; i < MembArray.length; i++){
-                  dataMemb[MembArray[i].member_name] =null;
-                  dataMemb2[MembArray[i].member_name] =MembArray[i];
-              }
-              console.log("dataMemb2");
-              console.log(dataMemb2);
-    $('input#autocomplete-input').autocomplete({
-    data:  dataMemb,
-    onAutocomplete:function(reqdata){
-        console.log(reqdata);
-        $('#member_id').val(dataMemb2[reqdata]['member_id']);
-    }
-    });
-          }
-      })
-    });
-    </script>
-
 
     <script>
         $(document).ready(function() {
@@ -684,31 +647,30 @@
             $('#tax_amount').val(tax_sum.toFixed(2));
             $('#total_amount').val((tax_sum + total).toFixed(2));
         }
-
     </script>
     <!--
 <script>
-     $(document).ready(function(){
-    let row_number = 1;
-    $("#add_row").click(function(e){
-      e.preventDefault();
-      let new_row_number = row_number - 1;
-      $('#product' + row_number).html($('#product' + new_row_number).html()).find('td:first-child');
-      $('#products_table').append('<tr id="product' + (row_number + 1) + '"></tr>');
-      row_number++;
-    });
+    $(document).ready(function() {
+        let row_number = 1;
+        $("#add_row").click(function(e) {
+            e.preventDefault();
+            let new_row_number = row_number - 1;
+            $('#product' + row_number).html($('#product' + new_row_number).html()).find(
+                'td:first-child');
+            $('#products_table').append('<tr id="product' + (row_number + 1) + '"></tr>');
+            row_number++;
+        });
 
-    $("#delete_row").click(function(e){
-      e.preventDefault();
-      if(row_number > 1){
-        $("#product" + (row_number - 1)).html('');
-        row_number--;
-      }
+        $("#delete_row").click(function(e) {
+            e.preventDefault();
+            if (row_number > 1) {
+                $("#product" + (row_number - 1)).html('');
+                row_number--;
+            }
+        });
     });
-  });
-
 </script>-->
-@stack('scripts')
+    @stack('scripts')
 </body>
 
 </html>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\receipts;
 use Illuminate\Http\Request;
 
 class receiptsController extends Controller
@@ -14,7 +15,9 @@ class receiptsController extends Controller
      */
     public function index()
     {
-        return view('admin.receipts.index');
+
+        $arr['receipts'] = receipts::all();
+        return view('admin.receipts.index')->with($arr);
     }
 
     /**

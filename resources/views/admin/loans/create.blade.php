@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('css')
+
+@endsection
+
 
 @section('content')
 
@@ -47,7 +51,7 @@
                                 <div class="col-md-2">
                                     <div class="">
                                         <label class="">code</label>
-                                        <input type="text" id="member_id">
+                                        <input type="text" id="member_id" name="members_id">
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +61,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Loan Type</label>
-                                    <select class="form-control select2" style="width: 100%;" name="company">
+                                    <select class="form-control select2" style="width: 100%;" name="loan_type_id">
                                         <option value="">Select Loans Type</option>
                                         @foreach ($loans_type as $l)
                                             <option value="{{$l->id}}">{{$l->loans_type}}</option>
@@ -69,7 +73,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Loan Amount</label>
-                                    <input type="text" class="form-control"  name="company_code">
+                                    <input type="text" class="form-control"  name="loanamount">
                                 </div>
                             </div>
                         </div>
@@ -78,13 +82,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Tenor</label>
-                                    <input type="text" class="form-control" name="company_name">
+                                    <input type="text" class="form-control" name="tenor">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Interest Rate</label>
-                                    <input type="text" class="form-control" placeholder="%" name="company_code">
+                                    <input type="text" class="form-control" placeholder="%" name="interest_rate">
                                 </div>
                             </div>
                         </div>
@@ -93,13 +97,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Monthly Deduction</label>
-                                    <input type="text" class="form-control" name="company_name">
+                                    <input type="text" class="form-control" name="monthlydeduction">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="bmd-label-floating">Loan Date</label>
-                                    <input type="text" class="form-control" name="company_code">
+                                    <label class="bmd-label-floating">Interest Amount</label>
+                                    <input type="text" class="form-control" name="inerestamount">
                                 </div>
                             </div>
                         </div>
@@ -108,7 +112,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Payment Start Month</label>
-                                    <select class="form-control select2" style="width: 100%;" name="company">
+                                    <select class="form-control select2" style="width: 100%;" name="paystartperiod_id">
                                         <option value="">Select Payment Start Month</option>
                                         @foreach ($period as $p)
                                             <option value="{{$p->id}}">{{$p->period_description}}</option>
@@ -132,3 +136,35 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                type: 'get',
+                url: 'http://localhost:8000/findMembers',
+                success: function(response) {
+                    console.log(response);
+                    var MembArray = response;
+                    var dataMemb = {};
+                    var dataMemb2 = {};
+                    for (var i = 0; i < MembArray.length; i++) {
+                        dataMemb[MembArray[i].member_name] = null;
+                        dataMemb2[MembArray[i].member_name] = MembArray[i];
+                    }
+                    console.log("dataMemb2");
+                    console.log(dataMemb2);
+                    $('input#autocomplete-input').autocomplete({
+                        data: dataMemb,
+                        onAutocomplete: function(reqdata) {
+                            console.log(reqdata);
+                            $('#member_id').val(dataMemb2[reqdata]['member_id']);
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+
+@endpush

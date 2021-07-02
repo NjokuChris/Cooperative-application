@@ -15,6 +15,16 @@ class CreateReceiptsTable extends Migration
     {
         Schema::create('receipts', function (Blueprint $table) {
             $table->id();
+            $table->string('receipts_id');
+            $table->string('subaccountcode');
+            $table->integer('order_id');
+            $table->float('amount_paid');
+            $table->string('account_no');
+            $table->integer('method_pay');
+            $table->string('paid_by');
+            $table->integer('location_id');
+            $table->text('naration');
+            $table->string('posted_by');
             $table->timestamps();
         });
     }

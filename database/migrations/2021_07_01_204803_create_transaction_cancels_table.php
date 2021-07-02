@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMembersTerminatesTable extends Migration
+class CreateTransactionCancelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateMembersTerminatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('members_terminates', function (Blueprint $table) {
+        Schema::create('transaction_cancels', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('member_id');
-            $table->foreign('member_id')->references('member_id')->on('members');
-            $table->unsignedInteger('terminate_type_id');
+            $table->string('transcode');
+            $table->integer('trans_type_id');
             $table->text('reason');
-            $table->integer('period_id');
-            $table->string('posted_by');
+            $table->string('cancelled_by');
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateMembersTerminatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('members_terminates');
+        Schema::dropIfExists('transaction_cancels');
     }
 }

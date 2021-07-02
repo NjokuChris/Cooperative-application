@@ -35,9 +35,15 @@ class withdrawersContoller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, withdrawer $withdrawer)
     {
-        //
+        $withdrawer->member_id = $request->member_id;
+        $withdrawer->amount = $request->amount;
+        $withdrawer->withdrawer_date = $request->withdrawer_date == null ? null : date(' Y-m-d', strtotime($request->withdrawer_date));
+        $withdrawer->transID = '2';
+        $withdrawer->save();
+
+        return back()->with('message', 'Cash Deposit saved successfully');
     }
 
     /**
@@ -59,7 +65,7 @@ class withdrawersContoller extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
