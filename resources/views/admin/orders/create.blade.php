@@ -56,14 +56,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr id="addr0">
+          <tr>
             <td>1</td>
             <td class="input-field form-group"><input type="text" name="products[]"  placeholder="Enter Product Name" class="autocomplete form-control"/></td>
             <td><input type="number" name="quantities[]" placeholder="Enter Qty" class="form-control qty" step="0" min="0"/></td>
             <td><input type="number" name="price[]" placeholder="Enter Unit Price" id="price" class="form-control price" step="0.00" min="0"/></td>
             <td><input type="number" name="total[]" placeholder="0.00" class="form-control total" readonly/></td>
           </tr>
-          <tr id='addr1'></tr>
         </tbody>
       </table>
     </div>
@@ -121,24 +120,26 @@
         var i = 1;
         $("#add_row").click(function(e) {
             e.preventDefault();
-            b = i - 1;
-            $('#addr' + i).html($('#addr' + b).html()).find('td:first-child').html(i + 1);
-            //$('#tab_logic').append('<tr id="addr' + (i + 1) + '"></tr>');
-            $('#tab_logic tbody').append('<tr id="addr0"> '+
-            '<td>2</td> '+
-           ' <td class="input-field form-group"><input type="text" name="products[]"  placeholder="Enter Product Name" class="autocomplete form-control"/></td> '+
-            '<td><input type="number" name="quantities[]" placeholder="Enter Qty" class="form-control qty" step="0" min="0"/></td>'+
-            '<td><input type="number" name="price[]" placeholder="Enter Unit Price" id="price" class="form-control price" step="0.00" min="0"/></td>'+
-            '<td><input type="number" name="total[]" placeholder="0.00" class="form-control total" readonly/></td>'+
-          '</tr>');
-            i++;
+            var clone_row = $('#tab_logic tbody tr:last-child').clone();
+            $('#tab_logic tbody').append(clone_row);
+            clone_row.children(':nth-child(1)').html( parseInt(clone_row.children(':nth-child(1)').html())+1);
+            clone_row.children(':nth-child(2)').children('input').val('');
+            clone_row.children(':nth-child(3)').children('input').val('');
+            clone_row.children(':nth-child(4)').children('input').val('');
+            clone_row.children(':nth-child(5)').children('input').val('');
+
+            clone_row.children(':nth-child(2)').children('input').autocomplete({
+                data: window.dataProd,
+                onAutocomplete: function(reqdata) {
+                    console.log(reqdata);
+                    clone_row.children(':nth-child(4)').children('input').val(window.dataProd2[reqdata]['price']);
+                }
+            });
         });
+
         $("#delete_row").click(function(e) {
             e.preventDefault();
-            if (i > 1) {
-                $("#addr" + (i - 1)).html('');
-                i--;
-            }
+            $('#tab_logic tbody tr:last-child').remove();
             calc();
         });
 
@@ -193,6 +194,8 @@
                 }
                 console.log("dataProd2");
                 console.log(dataProd2);
+                window.dataProd =dataProd;
+                window.dataProd2 =dataProd2;
                 $('input.autocomplete').autocomplete({
                     data: dataProd,
                     onAutocomplete: function(reqdata) {
