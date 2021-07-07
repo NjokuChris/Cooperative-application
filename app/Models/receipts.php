@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class receipts extends Model
 {
     use HasFactory;
+
+     public function pay_method()
+    {
+        return $this->belongsTo(Pay_method::class, 'method_pay');
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pay_method;
+use App\Models\payments;
 use App\Models\receipts;
 use Illuminate\Http\Request;
 
@@ -27,7 +29,8 @@ class receiptsController extends Controller
      */
     public function create()
     {
-        return view('admin.receipts.create');
+        $arr['pay_method'] = Pay_method::all();
+        return view('admin.receipts.create')->with($arr);
     }
 
     /**
@@ -36,9 +39,20 @@ class receiptsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, receipts $receipts)
     {
-        //
+        $receipts->subaccountcode = $request->subaccountcode;
+        $receipts->amount_paid = $request->amount_paid;
+        $receipts->account_no = $request->account_no;
+        $receipts->method_pay = $request->method_pay;
+        $receipts->paid_by = $request->paid_by;
+        $receipts->naration = $request->naration;
+        $receipts->posted_by = $request->posted_by;
+        $receipts->save();
+
+        $m = 'The record for ' . strtoupper($receipts->paid_by). '  has been Successfully Saved to the Database.' ;
+        // Session::flash('statuscode','info');
+         return back()->with('message', $m);
     }
 
     /**

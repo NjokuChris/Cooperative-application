@@ -26,6 +26,8 @@ Route::resource('/admin/company', App\Http\Controllers\Admin\CompaniesController
 
 Route::resource('/admin/loans', App\Http\Controllers\Admin\LoansController::class);
 Route::get('/findMembers', [App\Http\Controllers\Admin\LoansController::class, 'getMember']);
+Route::get('/getAccounts', [App\Http\Controllers\Admin\AccountsController::class, 'getAccounts']);
+Route::get('/getProduct', [App\Http\Controllers\Admin\ProductsController::class, 'getProduct']);
 Route::resource('/admin/branch', App\Http\Controllers\Admin\branch_locationsController::class);
 Route::resource('/admin/orders', App\Http\Controllers\Admin\OrdersController::class);
 Route::resource('/admin/withdrawers', App\Http\Controllers\Admin\withdrawersContoller::class);
@@ -33,6 +35,7 @@ Route::resource('/admin/deposit', App\Http\Controllers\Admin\depositsController:
 Route::resource('/admin/receipt', App\Http\Controllers\Admin\receiptsController::class);
 Route::resource('/admin/payments', App\Http\Controllers\Admin\paymentsController::class);
 Route::resource('/admin/accounts', App\Http\Controllers\Admin\AccountsController::class);
+Route::resource('/admin/products', App\Http\Controllers\Admin\ProductsController::class);
 
 Route::get('/users', [App\Http\Controllers\UsersController::class,'index'])->name('index');
 Route::get('/users-list', [App\Http\Controllers\UsersController::class, 'usersList'])->name('usersList');

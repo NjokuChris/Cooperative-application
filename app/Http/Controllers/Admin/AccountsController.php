@@ -8,6 +8,7 @@ use App\Models\Account_group;
 use App\Models\Account_type;
 use App\Models\Accounts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AccountsController extends Controller
 {
@@ -35,6 +36,13 @@ class AccountsController extends Controller
         return view('admin.accounts.create')->with($arr);
     }
 
+    public function getAccounts(Request $request)
+    {
+    $accounts = DB::table("accounts")
+    ->where("pay_method_id",$request->pay_method_id)
+    ->pluck("account_name","accountcode");
+    return response()->json($accounts);
+    }
     /**
      * Store a newly created resource in storage.
      *

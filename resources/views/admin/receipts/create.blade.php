@@ -73,16 +73,19 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Method of Payment</label>
-                                    <select class="form-control select2" style="width: 100%;" name="company">
-                                        <option value="">Select Payment Method</option>
+                                    <select class="form-control select2" id="pay_method" style="width: 100%;" name="company">
+                                        <option value="">Select Method of Payment</option>
+                                        @foreach ($pay_method as $p)
+                                            <option value="{{$p->id}}">{{$p->pay_method}}</option>
+
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Receiving Account</label>
-                                    <select class="form-control select2" style="width: 100%;" name="company">
-                                        <option value="">Select Receiving Account</option>
+                                    <select class="form-control select2" style="width: 100%;" id="accounts" name="accounts">
                                     </select>
                                 </div>
                             </div>
@@ -107,3 +110,32 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+<script type=text/javascript>
+    $('#pay_method').change(function(){
+    var pay_methodID = $(this).val();
+    if(pay_methodID){
+      $.ajax({
+        type:"GET",
+        url:"{{url('getAccounts')}}?pay_method_id="+pay_methodID,
+        success:function(res){
+        if(res){
+          $("#accounts").empty();
+          $("#accounts").append('<option>Select Account</option>');
+          $.each(res,function(key,value){
+            $("#accounts").append('<option value="'+key+'">'+value+'</option>');
+          });
+
+        }else{
+          $("#accounts").empty();
+        }
+        }
+      });
+    }else{
+      $("#accounts").empty();
+    }
+    });
+
+  </script>
+@endpush

@@ -56,12 +56,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr id='addr0'>
+          <tr id="addr0">
             <td>1</td>
-            <td><input type="text" name='products[]'  placeholder='Enter Product Name' class="form-control"/></td>
-            <td><input type="number" name='quantities[]' placeholder='Enter Qty' class="form-control qty" step="0" min="0"/></td>
-            <td><input type="number" name='price[]' placeholder='Enter Unit Price' class="form-control price" step="0.00" min="0"/></td>
-            <td><input type="number" name='total[]' placeholder='0.00' class="form-control total" readonly/></td>
+            <td class="input-field form-group"><input type="text" name="products[]"  placeholder="Enter Product Name" class="autocomplete form-control"/></td>
+            <td><input type="number" name="quantities[]" placeholder="Enter Qty" class="form-control qty" step="0" min="0"/></td>
+            <td><input type="number" name="price[]" placeholder="Enter Unit Price" id="price" class="form-control price" step="0.00" min="0"/></td>
+            <td><input type="number" name="total[]" placeholder="0.00" class="form-control total" readonly/></td>
           </tr>
           <tr id='addr1'></tr>
         </tbody>
@@ -112,5 +112,100 @@
 </div>
 </section>
 @endsection
+
+@push('scripts')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        var i = 1;
+        $("#add_row").click(function(e) {
+            e.preventDefault();
+            b = i - 1;
+            $('#addr' + i).html($('#addr' + b).html()).find('td:first-child').html(i + 1);
+            //$('#tab_logic').append('<tr id="addr' + (i + 1) + '"></tr>');
+            $('#tab_logic tbody').append('<tr id="addr0"> '+
+            '<td>2</td> '+
+           ' <td class="input-field form-group"><input type="text" name="products[]"  placeholder="Enter Product Name" class="autocomplete form-control"/></td> '+
+            '<td><input type="number" name="quantities[]" placeholder="Enter Qty" class="form-control qty" step="0" min="0"/></td>'+
+            '<td><input type="number" name="price[]" placeholder="Enter Unit Price" id="price" class="form-control price" step="0.00" min="0"/></td>'+
+            '<td><input type="number" name="total[]" placeholder="0.00" class="form-control total" readonly/></td>'+
+          '</tr>');
+            i++;
+        });
+        $("#delete_row").click(function(e) {
+            e.preventDefault();
+            if (i > 1) {
+                $("#addr" + (i - 1)).html('');
+                i--;
+            }
+            calc();
+        });
+
+        $('#tab_logic tbody').on('keyup change', function() {
+            calc();
+        });
+        $('#tax').on('keyup change', function() {
+            calc_total();
+        });
+
+
+    });
+
+    function calc() {
+        $('#tab_logic tbody tr').each(function(i, element) {
+            var html = $(this).html();
+            if (html != '') {
+                var qty = $(this).find('.qty').val();
+                var price = $(this).find('.price').val();
+                $(this).find('.total').val(qty * price);
+
+                calc_total();
+            }
+        });
+    }
+
+    function calc_total() {
+        total = 0;
+        $('.total').each(function() {
+            total += parseInt($(this).val());
+        });
+        $('#sub_total').val(total.toFixed(2));
+        tax_sum = total / 100 * $('#tax').val();
+        $('#tax_amount').val(tax_sum.toFixed(2));
+        $('#total_amount').val((tax_sum + total).toFixed(2));
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            type: 'get',
+            url:"{{url('getProduct')}}",
+            success: function(response) {
+                console.log(response);
+                var ProdArray = response;
+                var dataProd = {};
+                var dataProd2 = {};
+                for (var i = 0; i < ProdArray.length; i++) {
+                    dataProd[ProdArray[i].name] = null;
+                    dataProd2[ProdArray[i].name] = ProdArray[i];
+                }
+                console.log("dataProd2");
+                console.log(dataProd2);
+                $('input.autocomplete').autocomplete({
+                    data: dataProd,
+                    onAutocomplete: function(reqdata) {
+                        console.log(reqdata);
+                        $('#price').val(dataProd2[reqdata]['price']);
+                    }
+                });
+            }
+        })
+    });
+</script>
+
+
+@endpush
 
 

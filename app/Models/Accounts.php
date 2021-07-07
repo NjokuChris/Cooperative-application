@@ -11,16 +11,21 @@ class Accounts extends Model
 
      public function account_type()
     {
-        return $this->hasMany(account_type::class);
+        return $this->belongsTo(account_type::class);
     }
 
     public function account_class()
     {
-        return $this->hasMany(account_class::class);
+        return $this->belongsTo(account_class::class);
     }
 
     public function account_group()
     {
-        return $this->hasMany(account_group::class);
+        return $this->belongsTo(account_group::class);
+    }
+
+    public function pay_method()
+    {
+        return $this->belongsTo(pay_method::class);
     }
 }

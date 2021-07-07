@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\product;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -81,5 +82,12 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getProduct()
+    {
+        $p=product::all();
+
+        return response()->json($p);
     }
 }
