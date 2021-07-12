@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\product;
+use App\Models\pay_product;
 use App\Models\Product_category;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller
+class Product_categoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $arr['products'] = product::all();
-        return view('admin.products.index')->with($arr);
+        $arr['prod_category'] = Product_category::all();
+        return view('admin.prod_category.index')->with($arr);
     }
 
     /**
@@ -27,9 +27,7 @@ class ProductsController extends Controller
      */
     public function create()
     {
-
-        $arr['prod_category'] = Product_category::all();
-        return view('admin.products.create')->with($arr);
+        return view('admin.prod_category.create');
     }
 
     /**
@@ -38,16 +36,13 @@ class ProductsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, product $product)
+    public function store(Request $request, Product_category $product_category)
     {
-        $product->product_name = $request->product_name;
-        $product->product_code = $request->product_code;
-        $product->category_id = $request->category;
-        $product->price = $request->price;
-        $product->save();
+        $product_category->category = $request->category;
+        $product_category->accountcode = $request->accountcode;
+        $product_category->save();
 
-        return redirect('admin/products');
-        //
+        return redirect('admin/prod_category');
     }
 
     /**
@@ -58,7 +53,7 @@ class ProductsController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -67,11 +62,10 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(product $product)
+    public function edit(Product_category $prod_category)
     {
-        $arr['product'] = $product;
-        $arr['prod_category'] = Product_category::all();
-        return view('admin.products.edit')->with($arr);
+        $arr['product_category'] = $prod_category;
+        return view('admin.prod_category.edit')->with($arr);
     }
 
     /**
@@ -81,15 +75,14 @@ class ProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, product $product)
+    public function update(Request $request, Product_category $Prod_category)
     {
-        $product->product_name = $request->product_name;
-        $product->product_code = $request->product_code;
-        $product->category_id = $request->category;
-        $product->price = $request->price;
-        $product->save();
 
-        return redirect('admin/products');
+        $Prod_category->category = $request->category;
+        $Prod_category->accountcode = $request->accountcode;
+        $Prod_category->save();
+
+        return redirect('admin/prod_category');
     }
 
     /**
@@ -101,12 +94,5 @@ class ProductsController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function getProduct()
-    {
-        $p=product::all();
-
-        return response()->json($p);
     }
 }

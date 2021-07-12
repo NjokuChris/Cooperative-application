@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>LOANS</h1>
+            <h1>Product Category</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">LOANS</li>
+              <li class="breadcrumb-item active">Product Category</li>
             </ol>
           </div>
         </div>
@@ -30,9 +30,9 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-          <p>
-            <a href="{{route('company.create')}}" class="btn btn-primary">Create New Company</a>
-          </p>
+        <p>
+            <a href="{{route('prod_category.create')}}" class="btn btn-primary">Create New Product Category</a>
+            </p>
         <div class="row">
           <div class="col-12">
 
@@ -40,34 +40,25 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">LOANS APPLICATIONS</h3>
+                <h3 class="card-title">DataTable with default features</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>LOAN ID</th>
-                    <th>MEMBERS NAME</th>
-                    <th>LOANS DATE</th>
-                    <th>LOAN AMOUNT</th>
-                    <th>INTEREST %</th>
-                    <th>INTEREST AMOUNT</th>
-                    <th>POSTED BY</th>
+                    <th>ID</th>
+                    <th>Product Category</th>
+                    <th>Account Code</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-
-                    @foreach($loans as $l)
+                    @foreach($prod_category as $p)
                     <tr>
-                        <td>{{$l->loans_id}}</td>
-                        <td>{{$l->member_name}}</td>
-                        <td>{{$l->loans_date}}</td>
-                        <td>{{$l->loanamount}}</td>
-                        <td>{{$l->interest_rate}}</td>
-                        <td>{{$l->interestamount}}</td>
-                        <td>{{$l->posted_by}}</td>
+                        <td>{{$p->id}}</td>
+                        <td>{{$p->category}}</td>
+                        <td>{{$p->accountcode}}</td>
                         <td>
                             <div class="dropdown show">
                                 <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,15 +66,16 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a href="{{route('loans.edit',$l->id) }}" class="dropdown-item">
+                                    <a href="{{route('prod_category.edit',$p->id) }}" class="dropdown-item">
                                         <i class="nav-icon fas fa-copy" style="color: blue"></i>
                                         Edit</a>
                                     <a href="#" class="dropdown-item">
                                         <i class="nav-icon fas fa-cut" style="color: red"></i>
-                                        Terminate</a>
+                                        Delete</a>
                                 </div>
                               </div>
                         </td>
+
                     </tr>
                     @endforeach
 
@@ -92,13 +84,9 @@
                   </tbody>
                   <tfoot>
                   <tr>
-                    <th>LOAN ID</th>
-                    <th>MEMBERS NAME</th>
-                    <th>LOANS DATE</th>
-                    <th>LOAN AMOUNT</th>
-                    <th>INTEREST %</th>
-                    <th>INTEREST AMOUNT</th>
-                    <th>POSTED BY</th>
+                    <<th>ID</th>
+                    <th>Product Category</th>
+                    <th>Account Code</th>
                     <th>Action</th>
                   </tr>
                   </tfoot>

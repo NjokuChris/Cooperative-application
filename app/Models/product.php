@@ -14,4 +14,10 @@ class product extends Model
         'rate',
         'price',
     ];
+
+    public function Prod_category()
+    {
+        $this->belongsTo(Product_category::class, 'category_id');
+    }
+
 }

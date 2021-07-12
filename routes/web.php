@@ -36,6 +36,7 @@ Route::resource('/admin/receipt', App\Http\Controllers\Admin\receiptsController:
 Route::resource('/admin/payments', App\Http\Controllers\Admin\paymentsController::class);
 Route::resource('/admin/accounts', App\Http\Controllers\Admin\AccountsController::class);
 Route::resource('/admin/products', App\Http\Controllers\Admin\ProductsController::class);
+Route::resource('/admin/prod_category', App\Http\Controllers\Admin\Product_categoryController::class);
 
 Route::get('/users', [App\Http\Controllers\UsersController::class,'index'])->name('index');
 Route::get('/users-list', [App\Http\Controllers\UsersController::class, 'usersList'])->name('usersList');
@@ -48,5 +49,9 @@ Route::get('admin/api/product', [App\Http\Controllers\InvoiceController::class, 
 
 
 Route::get('/admin', function () {
+    return view('layouts/admin');
+});
+
+Route::get('/user', function () {
     return view('layouts/admin');
 });

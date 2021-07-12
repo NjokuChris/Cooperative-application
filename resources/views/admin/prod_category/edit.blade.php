@@ -27,7 +27,7 @@
             <div class="card-header">
                 <h3 class="card-title">Company Record Adjustment Form</h3>
             </div>
-            <form method="post" action="{{route('company.update', $company->company_id)}}" enctype="multipart/form-data">
+            <form method="post" action="{{route('prod_category.update', $product_category->id)}}" enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 @method('PUT')
                 <!-- SELECT2 EXAMPLE -->
@@ -36,14 +36,14 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Company Name</label>
-                                <input type="text" class="form-control" name="company_name" value="{{ $company->company_name}}">
+                                <label class="bmd-label-floating">Product Category</label>
+                                <input type="text" class="form-control" name="category" value="{{ $product_category->category}}">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label class="bmd-label-floating">Company</label>
-                                <input type="text" class="form-control" name="company_code" value="{{ $company->company_code}}">
+                                <label class="bmd-label-floating">Account Code</label>
+                                <input type="text" class="form-control" name="accountcode" value="{{ $product_category->accountcode}}">
                             </div>
                         </div>
 
