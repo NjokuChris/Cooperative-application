@@ -37,8 +37,10 @@ Route::resource('/admin/payments', App\Http\Controllers\Admin\paymentsController
 Route::resource('/admin/accounts', App\Http\Controllers\Admin\AccountsController::class);
 Route::resource('/admin/products', App\Http\Controllers\Admin\ProductsController::class);
 Route::resource('/admin/prod_category', App\Http\Controllers\Admin\Product_categoryController::class);
+Route::resource('/admin/users', App\Http\Controllers\Admin\UsersController::class);
+Route::resource('/admin/roles', App\Http\Controllers\Admin\RolesController::class);
 
-Route::get('/users', [App\Http\Controllers\UsersController::class,'index'])->name('index');
+//Route::get('/users1', [App\Http\Controllers\UsersController::class,'index'])->name('index');
 Route::get('/users-list', [App\Http\Controllers\UsersController::class, 'usersList'])->name('usersList');
 
 Route::get('search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');

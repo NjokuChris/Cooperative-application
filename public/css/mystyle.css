@@ -299,3 +299,8 @@ nav .input-field {
   .dropdown-trigger {
     cursor: pointer;
   }
+
+  .center {
+    margin: auto;
+    padding: 10px;
+  }

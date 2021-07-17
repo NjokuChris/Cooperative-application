@@ -469,7 +469,7 @@
 
                         <li class="nav-item">
                             <a href="#" class="nav-link
-            @if ($segment=='setups' ) active @endif">
+                                @if ($segment=='setups' ) active @endif">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Reports
@@ -486,9 +486,50 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link
-                @if ($segment=='setups' ) active @endif ">
-                  <i class=" far fa-circle nav-icon"></i>
+                                        @if ($segment=='setups' ) active @endif ">
+                                        <i class=" far fa-circle nav-icon"></i>
                                         <p>Cash Deposit Report</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link
+                                @if ($segment=='setups' ) active @endif">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Services
+                                    <i class="fas fa-angle-left right"></i>
+
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('users.create') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create User</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Users List</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('roles.index') }}" class="nav-link
+                                        @if ($segment=='setups' ) active @endif ">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Roles</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link
+                                        @if ($segment=='setups' ) active @endif ">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Role Permission</p>
                                     </a>
                                 </li>
 
