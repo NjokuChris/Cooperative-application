@@ -55,5 +55,5 @@ Route::get('/admin', function () {
 });
 
 Route::get('/user', function () {
-    return view('layouts/admin');
+    return view('user/dashboard');
 });

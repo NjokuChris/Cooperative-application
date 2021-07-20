@@ -86,69 +86,6 @@
                         </form>
                     </div>
                 </li>
-
-                <!-- Messages Dropdown Menu -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link" data-toggle="dropdown" href="#">
-                        <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="dist/img/user1-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 mr-3 img-circle">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">Call me whenever you can...</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="dist/img/user8-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">I got your message bro</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <img src="dist/img/user3-128x128.jpg" alt="User Avatar"
-                                    class="img-size-50 img-circle mr-3">
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-right text-sm text-warning"><i
-                                                class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">The subject goes here</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
-                </li>
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -222,9 +159,9 @@
                             </a>
                         </li>
 
+                        @can('admin')
                         <li class="nav-item">
-                            <a href="#" class="nav-link
-            @if ($segment=='members' ) active @endif">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Cooperative Members
@@ -234,23 +171,56 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('members.create') }}" class="nav-link
-                @if ($segment=='members' && $segment1=='create' ) active @endif">
+                                    <a href="{{ route('members.create') }}" class="nav-link">
+
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>New Member Registration</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('members.index') }}" class="nav-link
-                @if ($segment=='members' && $segment1=='index' ) active @endif ">
-                  <i class=" far fa-circle nav-icon"></i>
+                                    <a href="{{ route('members.index') }}" class="nav-link">
+                                    <i class=" far fa-circle nav-icon"></i>
                                         <p>Manage Member</p>
                                     </a>
                                 </li>
 
                             </ul>
                         </li>
+                        @endcan
 
+
+
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Self Help
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+
+                                <li class="nav-item">
+                                    <a href="{{ route('loans.create') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Self
+
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('loans.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Self</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        @can('admin')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -279,7 +249,9 @@
 
                             </ul>
                         </li>
+                        @endcan
 
+                        @can('admin')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -307,7 +279,9 @@
                                 </li>
                             </ul>
                         </li>
+                        @endcan
 
+                        @can('admin')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -335,7 +309,9 @@
                                 </li>
                             </ul>
                         </li>
+                        @endcan
 
+                        @can('admin')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -363,7 +339,9 @@
                                 </li>
                             </ul>
                         </li>
+                        @endcan
 
+                        @can('admin')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -419,11 +397,8 @@
                                 </li>
                             </ul>
                         </li>
-
-
                         <li class="nav-item">
-                            <a href="#" class="nav-link
-            @if ($segment=='setups' ) active @endif">
+                            <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Setups
@@ -457,9 +432,8 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('branch.index') }}" class="nav-link
-                @if ($segment=='setups' ) active @endif ">
-                  <i class=" far fa-circle nav-icon"></i>
+                                    <a href="{{ route('branch.index') }}" class="nav-link">
+                                        <i class=" far fa-circle nav-icon"></i>
                                         <p>Branch</p>
                                     </a>
                                 </li>
@@ -469,7 +443,7 @@
 
                         <li class="nav-item">
                             <a href="#" class="nav-link
-            @if ($segment=='setups' ) active @endif">
+                                @if ($segment=='setups' ) active @endif">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
                                     Reports
@@ -486,14 +460,60 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link
-                @if ($segment=='setups' ) active @endif ">
-                  <i class=" far fa-circle nav-icon"></i>
+                                        @if ($segment=='setups' ) active @endif ">
+                                        <i class=" far fa-circle nav-icon"></i>
                                         <p>Cash Deposit Report</p>
                                     </a>
                                 </li>
 
                             </ul>
                         </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link
+                                @if ($segment=='setups' ) active @endif">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Services
+                                    <i class="fas fa-angle-left right"></i>
+
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('users.create') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create User</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('users.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Users List</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('roles.index') }}" class="nav-link
+                                        @if ($segment=='setups' ) active @endif ">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Roles</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link
+                                        @if ($segment=='setups' ) active @endif ">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Role Permission</p>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        @endcan
+
+
+
+
 
                         <li class="nav-header">Action</li>
                         <li class="nav-item">

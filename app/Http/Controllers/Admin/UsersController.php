@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -25,9 +26,19 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('admin.users.create');
+        if($request->ajax()){
+            $roles = Role::where('id', $request->role_id)->first();
+            $permissions = $roles->permissions;
+
+            return $permissions;
+        }
+
+        $roles = Role::all();
+
+
+        return view('admin.users.create', ['roles' => $roles]);
     }
 
     /**
@@ -38,11 +49,12 @@ class UsersController extends Controller
      */
     public function store(Request $request, user $user)
     {
+
         //validate the fields
         $request->validate([
-            'name' => 'required max:255',
+            'name' => 'required',
             'email' => 'required|unique:users|email',
-            's_name' => 'required max:255',
+            's_name' => 'required',
             'f_name' => 'required',
             'm_name' => 'required',
             'password' => 'required|between:8,255|confirmed',
@@ -61,6 +73,18 @@ class UsersController extends Controller
             $user->password = Hash::make($request->password);
         }
         $user->save();
+
+        if($request->role != null){
+            $user->roles()->attach($request->role);
+            $user->save();
+        }
+
+        if($request->permissions != null){
+            foreach ($request->permissions as $permission){
+                $user->permissions()->attach($permission);
+                $user->save();
+            }
+        }
 
         return redirect('/admin/users');
     }
@@ -85,8 +109,25 @@ class UsersController extends Controller
      */
     public function edit(user $user)
     {
+        $roles = Role::get();
+        $userRole = $user->roles->first();
+        if($userRole != null){
+            $rolePermission = $userRole->allRolePermissions;
+        }else{
+            $rolePermission = null;
+        }
 
-        return view('admin.users.edit', ['user'=>$user]);
+        $userPermissions = $user->permissions;
+
+
+
+        return view('admin.users.edit', [
+            'user'=>$user,
+            'roles'=>$roles,
+            'userRole'=>$userRole,
+            'rolePermission'=>$rolePermission,
+            'userPermissions'=>$userPermissions
+        ]);
 
     }
 
@@ -100,12 +141,12 @@ class UsersController extends Controller
     public function update(Request $request, user $user)
     {
         $request->validate([
-            'name' => 'required max:255',
-            'email' => 'required|unique:users|email',
-            's_name' => 'required max:255',
+            'name' => 'required',
+            'email' => 'required',
+            's_name' => 'required',
             'f_name' => 'required',
             'm_name' => 'required',
-            'password' => 'required|between:8,255|confirmed',
+            'password' => 'required|between:8,255',
             'password_confirmation' =>'required'
 
         ]);
@@ -116,8 +157,27 @@ class UsersController extends Controller
         $user->f_name = $request->f_name;
         $user->m_name = $request->m_name;
         $user->is_member = $request->is_member == null ? 0 : $request->is_member;
-        $user->password = Hash::make($request->password);
+        if($request->password != null){
+            $user->password = Hash::make($request->password);
+        }
+
         $user->save();
+
+        $user->roles()->detach();
+        $user->permissions()->detach();
+
+        if($request->role !=null){
+            $user->roles()->attach($request->role);
+            $user->save();
+        }
+
+        if($request->permissions !=null){
+            foreach ($request->permissions as $permission) {
+                $user->permissions()->attach($permission);
+                $user->save();
+            }
+
+        }
 
         return redirect('/admin/users');
 

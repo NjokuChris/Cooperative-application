@@ -61,8 +61,26 @@
                         <td>{{$u['id']}}</td>
                         <td>{{$u['name']}}</td>
                         <td>{{$u['email']}}</td>
-                        <td>Role</td>
-                        <td>Permission</td>
+                        <td>
+                            @if($u->roles->isNotEmpty())
+                            @foreach ($u->roles as $role)
+                                <span class="badge badge-secondary">
+                                    {{ $role->name }}
+                                </span>
+
+                            @endforeach
+                            @endif
+                        </td>
+                        <td>
+                            @if($u->roles->isNotEmpty())
+                            @foreach ($u->permissions as $permission)
+                                <span class="badge badge-secondary">
+                                    {{ $permission->name }}
+                                </span>
+
+                            @endforeach
+                            @endif
+                        </td>
                         <td>
                             <a href="/admin/users/{{ $u['id']}}"><i class="fa fa-eye"></i></a>
                             <a href="/admin/users/{{ $u['id']}}/edit"><i class="fa fa-edit"></i></a>

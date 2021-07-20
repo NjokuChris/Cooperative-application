@@ -9,11 +9,25 @@
     <div class="card-body">
         <h5 class="card-title">Role</h5>
         <p class="card-text">
-            ................
+            @if($user->roles->isNotEmpty())
+            @foreach ($user->roles as $role)
+                <span class="badge badge-primary">
+                    {{ $role->name }}
+                </span>
+
+            @endforeach
+            @endif
         </p>
         <h5 class="card-title">Permission</h5>
         <p class="card-text">
-            ................
+            @if($user->roles->isNotEmpty())
+            @foreach ($user->permissions as $permission)
+                <span class="badge badge-success">
+                    {{ $permission->name }}
+                </span>
+
+            @endforeach
+            @endif
         </p>
     </div>
     <div class="card-footer">
