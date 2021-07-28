@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>DataTables</h1>
+            <h1>Cooperative Members</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">DataTables</li>
+              <li class="breadcrumb-item active">Cooperative Members</li>
             </ol>
           </div>
         </div>
@@ -37,7 +37,7 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
+                <h3 class="card-title">List of Cooperative members</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -49,6 +49,7 @@
                     <th>Name</th>
                     <th>Savings Amount</th>
                     <th>Location</th>
+                    <th>Company</th>
                     <th>Date joined</th>
                     <th>Action</th>
                   </tr>
@@ -60,7 +61,16 @@
                         <td>{{$m->title}}</td>
                         <td>{{$m->member_name}}</td>
                         <td>{{$m->savings_amount}}</td>
-                        <td>{{$m->branch_location->branch}}</td>
+                        <td>
+                            @if($m->branch_location != null)
+                            {{$m->branch_location->branch}}
+                            @endif
+                        </td>
+                        <td>
+                            @if($m->company != null)
+                            {{$m->company->company_name}}
+                            @endif
+                        </td>
                         <td>{{$m->joined_date}}</td>
                         <td>
                             <div class="dropdown show">
@@ -69,8 +79,12 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a href="/admin/members/{{ $m['member_id']}}"><i class="fa fa-eye"></i></a>
+                                    {{--<a href="{{route('members.show',$m->member_id) }}" class="dropdown-item">--}}
+                                        <i class="nav-icon fas fa-eye" style="color: blue"></i>
+                                        Vieww</a>
                                     <a href="{{route('members.edit',$m->member_id) }}" class="dropdown-item">
-                                        <i class="nav-icon fas fa-copy" style="color: blue"></i>
+                                        <i class="nav-icon fas fa-copy" style="color: blpue"></i>
                                         Edit</a>
                                     <a href="#" class="dropdown-item">
                                         <i class="nav-icon fas fa-cut" style="color: red"></i>
@@ -92,6 +106,7 @@
                     <th>Name</th>
                     <th>Savings Amount</th>
                     <th>Location</th>
+                    <th>Company</th>
                     <th>Date joined</th>
                     <th>Action</th>
                   </tr>

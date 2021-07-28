@@ -43,6 +43,7 @@ class CompaniesController extends Controller
     {
         $company->company_name = $request->company_name;
         $company->company_code = $request->company_code;
+        $company->status = $request->status;
         $company->save();
         return redirect()->route('company.index');
     }
@@ -81,6 +82,7 @@ class CompaniesController extends Controller
     {
         $company->company_name = $request->company_name;
         $company->company_code = $request->company_code;
+        $company->status = $request->status;
         $company->save();
         return redirect('admin/company');
     }

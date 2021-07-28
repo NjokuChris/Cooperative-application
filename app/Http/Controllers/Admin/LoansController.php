@@ -54,11 +54,12 @@ class LoansController extends Controller
      */
     public function store(Request $request, Loans $loans)
     {
+        dd($request);
         $loans->members_id = $request->members_id;
         $loans->loanamount = $request->loanamount;
         $loans->tenor = $request->tenor;
         $loans->interest_rate = $request->interest_rate;
-        $loans->inerestamount = $request->inerestamount;
+        $loans->interestamount = $request->interestamount;
         $loans->monthlydeduction = $request->monthlydeduction;
         $loans->total_payable_amount = '10000';
         $loans->loan_type_id = $request->loan_type_id;

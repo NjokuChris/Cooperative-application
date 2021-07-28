@@ -11,12 +11,22 @@ class Members extends Model
 
     public function Company()
     {
-     return $this->belongsTo(company::class);
+     return $this->belongsTo(company::class, 'company');
     }
 
     public function branch_location()
     {
        return $this->belongsTo(branch_location::class, 'LocationID', 'id');
+    }
+
+    public function title()
+    {
+        return $this->belongsTo(Title::class, 'title');
+    }
+
+    public function bank()
+    {
+        return $this->belongsTo(Accounts::class, 'BankID');
     }
 
     protected $primaryKey = 'member_id';

@@ -113,8 +113,8 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>-->
+<script src="{{ asset('js/Autocomplete.js') }}"></script>
 <script>
     $(document).ready(function() {
         var i = 1;
@@ -131,7 +131,7 @@
             clone_row.children(':nth-child(2)').children('input').autocomplete({
                 data: window.dataProd,
                 onAutocomplete: function(reqdata) {
-                    //console.log(reqdata);
+                   // console.log(reqdata);
                     clone_row.children(':nth-child(4)').children('input').val(window.dataProd2[reqdata]['price']);
                 }
             });
@@ -184,7 +184,7 @@
             type: 'get',
             url:"{{url('getProduct')}}",
             success: function(response) {
-                //console.log(response);
+                console.log(response);
                 var ProdArray = response;
                 var dataProd = {};
                 var dataProd2 = {};
@@ -192,14 +192,14 @@
                     dataProd[ProdArray[i].product_name] = null;
                     dataProd2[ProdArray[i].product_name] = ProdArray[i];
                 }
-                //console.log("dataProd2");
-                //console.log(dataProd2);
+               // console.log("dataProd2");
+              //  console.log(dataProd2);
                 window.dataProd =dataProd;
                 window.dataProd2 =dataProd2;
                 $('input.autocomplete').autocomplete({
                     data: dataProd,
                     onAutocomplete: function(reqdata) {
-                        //console.log(reqdata);
+                        console.log(reqdata);
                         $('#price').val(dataProd2[reqdata]['price']);
                     }
                 });

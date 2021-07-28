@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Cooperative Member</h1>
+            <h1>Title</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Cooperative Members</li>
+              <li class="breadcrumb-item active">Title</li>
             </ol>
           </div>
         </div>
@@ -31,8 +31,8 @@
     <section class="content">
       <div class="container-fluid">
         <p>
-            <a href="{{route('members.create')}}" class="btn btn-primary">Create New Member</a>
-            </p>
+            <a href="{{route('title.create')}}" class="btn btn-primary">Create New Title</a>
+        </p>
         <div class="row">
           <div class="col-12">
 
@@ -40,68 +40,66 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List of Cooperatives Member</h3>
+                <h3 class="card-title">List of Title</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Member ID</th>
+                    <th>ID</th>
                     <th>Title</th>
-                    <th>Name</th>
-                    <th>Savings Amount</th>
-                    <th>Location</th>
-
-                    <th>Date joined</th>
                     <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($members as $m)
+                    @foreach($title as $t)
                     <tr>
-                        <td>{{$m->member_id}}</td>
-                        <td>{{$m->title}}</td>
-                        <td>{{$m->member_name}}</td>
-                        <td>{{$m->savings_amount}}</td>
-                        <td>
-                            @if($m->branch_location != null)
-                            {{$m->branch_location->branch}}
-                            @endif
-                        </td>
+                        <td>{{$t['id']}}</td>
+                        <td>{{$t['title']}}</td>
 
-                        <td>{{$m->joined_date}}</td>
                         <td>
-                            <div class="dropdown show">
-                                <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Action
-                                </a>
-
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a href="{{route('members.show',$m->member_id) }}" class="dropdown-item">
-                                       {{-- <a href="/admin/members/{{ $m['member_id']}}"><i class="fa fa-eye"></i></a>--}}
-                                        <i class="nav-icon fas fa-eye" style="color: green"></i>
-                                        View</a>
-                                    <a href="{{route('members.edit',$m->member_id) }}" class="dropdown-item">
-                                        <i class="nav-icon fas fa-copy" style="color: blue"></i>
-                                        Edit</a>
-                                    <a href="#" class="dropdown-item">
-                                        <i class="nav-icon fas fa-cut" style="color: red"></i>
-                                        Terminate</a>
-                                </div>
-                              </div>
+                            <a href="/admin/title/{{ $t['id']}}/edit"><i class="fa fa-edit"></i></a>
+                            <a href="#" data-toggle="modal" data-target="#deleteModal1" data-titleid="{{$t['id']}}"><i class="fa fa-trash"></i></a>
                         </td>
 
                     </tr>
                     @endforeach
-
-
 
                   </tbody>
 
                 </table>
               </div>
               <!-- /.card-body -->
+
+              <!-- delete Modal -->
+              <div class="modal fade" id="deleteModal1" tabindex="1" title="dialog">
+                <div class="modal-dialog" title="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Are you shure you want to delete this Title.</h4>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Click delete if you want to delete this Title.&hellip;</p>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <form method="POST" action="">
+                        @method('DELETE')
+                        @csrf
+                       {{-- <input type="hidden" id="user_id" name="user_id" value=""> --}}
+                        <a class="btn btn-primary" onclick="$(this).closest('form').submit();">Delete</a>
+                      </form>
+                    </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+              <!-- /.modal -->
             </div>
             <!-- /.card -->
           </div>
@@ -149,4 +147,16 @@
     });
   });
 </script>
+
+<script>
+    $('#deleteModal1').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var title_id = button.data('titleid') // Extract info from data-* attributes
+
+  var modal = $(this)
+  // modal.find('.modal-footer' #user_id).val(user_id)
+  modal.find('form').attr('action','/admin/title/' + title_id);
+})
+</script>
+
 @endpush

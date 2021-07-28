@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Accounts;
 use App\Models\branch_location;
 use App\Models\company;
 use Illuminate\Http\Request;
 use App\Models\members;
+use App\Models\Title;
 use Illuminate\Contracts\Session\Session;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
 class MembersController extends Controller
 {
@@ -23,8 +26,10 @@ class MembersController extends Controller
      */
     public function index()
     {
-        $arr['members'] = Members::all();
-        return view('members')->with($arr);
+
+
+       $members = Members::orderBy('member_id', 'desc')->get();
+        return view('members', ['members' => $members]);
     }
 
     /**
@@ -34,7 +39,9 @@ class MembersController extends Controller
      */
     public function create()
     {
-        $arr['company'] = company::all();
+        $arr['company'] = company::where('status', 'Active')->get();
+        $arr['title'] = Title::all();
+        $arr['bank'] = Accounts::where('pay_method_id', 2)->get();
         $arr['branch'] = branch_location::all();
         return view('admin.members.create')->with($arr);
     }
@@ -48,6 +55,13 @@ class MembersController extends Controller
     public function store(Request $request, members $member)
     {
 
+        $request->validate([
+            'firstName' => 'required',
+            'surName' => 'required',
+            'savings_amount' => 'required',
+            'joined_date' => 'required',
+
+        ]);
 
         if(isset($request->photo) && $request->photo->getClientOriginalName()){
             $ext = $request->photo->getClientOriginalExtension();
@@ -63,7 +77,7 @@ class MembersController extends Controller
        $member->firstName = $request->firstName;
        $member->middleName = $request->middleName;
        $member->surName = $request->surName;
-       $member->member_name = strtoupper($member->surName).' '. strtoupper($member->firstName) . ' ' . strtoupper($member->middleName) ;
+       $member->member_name = trim(strtoupper($member->surName).' '. strtoupper($member->firstName) . ' ' . strtoupper($member->middleName)) ;
        $member->savings_amount = $request->savings_amount;
        $member->posted_date = $request->posted_date;
        $member->LocationID = $request->LocationID;
@@ -83,6 +97,7 @@ class MembersController extends Controller
        $member->photo = $file;
        $member->posted_by = $request->posted_by;
        $member->title = $request->title;
+
        $member->save();
 
 
@@ -98,9 +113,9 @@ class MembersController extends Controller
      * @param  int  $member_id
      * @return \Illuminate\Http\Response
      */
-    public function show($member_id)
+    public function show(members $member)
     {
-        //
+        return view('admin.members.show',['member' => $member]);
     }
 
     /**
@@ -111,9 +126,12 @@ class MembersController extends Controller
      */
     public function edit(members $member)
     {
-        //echo $member->title;
+       $arr['title'] = Title::all();
        $arr['member'] = $member;
-       $arr['company'] = company::all();
+       $arr['bank'] = Accounts::where('pay_method_id', 2)->pluck('account_name','id');
+       $arr['company'] = company::where('status', 'Active')->pluck('company_name','company_id');
+       $arr['branch'] = branch_location::pluck('branch','id');
+
        return view('admin.members.edit')->with($arr);
     }
 
@@ -127,7 +145,13 @@ class MembersController extends Controller
     public function update(Request $request, members $member)
     {
 
+        $request->validate([
+            'firstName' => 'required',
+            'surName' => 'required',
+            'savings_amount' => 'required',
+            'joined_date' => 'required',
 
+        ]);
 
         if(isset($request->photo) && $request->photo->getClientOriginalName()
         ){
@@ -146,7 +170,7 @@ class MembersController extends Controller
         $member->firstName = $request->firstName;
         $member->middleName = $request->middleName;
         $member->surName = $request->surName;
-        $member->member_name = strtoupper($member->surName).' '. strtoupper($member->firstName) . ' ' . strtoupper($member->middleName) ;
+        $member->member_name = strtoupper($member->surName).' '. strtoupper($member->firstName) . ' ' . strtoupper($member->middleName);
         $member->savings_amount = $request->savings_amount;
         $member->posted_date = $request->posted_date;
         $member->LocationID = $request->LocationID;

@@ -48,6 +48,18 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <p class="bmd-label-floating">Status</p>
+                                <input type="radio" id="html" name="status" value="Active" {{ ($company->status=="Active")? "checked" : "" }}>
+                                <label for="html" class="bmd-label-floating">Active</label>
+                                <input type="radio" id="css" name="status" value="In-Active" {{ ($company->status=="In-Active")? "checked" : "" }}>
+                                <label for="css" class="bmd-label-floating">In-Active</label>
+                            </div>
+
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <input type="submit" class="btn btn-info" value="Save">

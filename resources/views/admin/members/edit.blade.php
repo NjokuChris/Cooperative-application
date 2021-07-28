@@ -64,35 +64,36 @@
                         <div class="form-group">
                             <label>Title</label>
                             <select class="form-control select2" name="title" style="width: 100%;" value="{{$member->title}}">
-                                <option selected="selected">Mr.</option>
-                                <option>Mrs</option>
-                                <option>Miss</option>
-                                <option>Dr.</option>
-                                <option>PhD</option>
-                                <option>Mallam</option>
-                                <option>Prof.</option>
+                                <option value="{{$member->title}}">{{$member->title}}</option>
+                                @foreach ($title as $t)
+                                <option value="{{$t->title}}"
+                                    @if($t->member_id == $member->title)
+                                    selected
+                                    @endif
+                                    >{{$t->title}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                 <!--   <div class="col-md-3">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Members No:</label>
-                                <input type="text" class="form-control" name="member_no" value="{{$member->member_no}}">
+                                <input type="text" class="form-control" name="member_no" required value="{{$member->member_no}}">
                             </div>
-                        </div>
+                        </div> -->
                 </div>
 
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="bmd-label-floating">Fist Name</label>
-                            <input type="text" class="form-control" name="firstName" value="{{$member->firstName}}">
+                            <input type="text" class="form-control" name="firstName" required value="{{$member->firstName}}">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="bmd-label-floating">Sur Name</label>
-                            <input type="text" class="form-control" name="surName" value="{{$member->surName}}">
+                            <input type="text" class="form-control" name="surName" required value="{{$member->surName}}">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -108,43 +109,37 @@
                             <label>Company</label>
                             <select class="form-control select2" style="width: 100%;" name="company" value="{{$member->company}}">
                                 <option value="">Select Company</option>
-                                @foreach ($company as $c)
-                                    <option value="{{$c->company_id}}"
-                                        @if($c->member_id == $member->company_id)
-                                        selected
-                                        @endif
-                                        >{{$c->company_name}}</option>
+                                @foreach ($company as $company_id => $company_name)
+                                    <option value="{{ $company_id }}" {{ ( $company_id == $member->company) ? 'selected' : '' }}>{{$company_name}}
+                                      </option>
 
                                 @endforeach
                             </select>
                         </div>
                     </div>
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="bmd-label-floating">employee No.</label>
                             <input type="text" class="form-control" name="employee_no" value="{{$member->employee_no}}">
                         </div>
                     </div>
-
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="bmd-label-floating">Saving Amount</label>
-                            <input type="text" class="form-control" name="savings_amount" value="{{$member->savings_amount}}">
+                            <input type="text" class="form-control" name="savings_amount" required value="{{$member->savings_amount}}">
                         </div>
                     </div>
-
                 </div>
                 <div class="row">
 
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Branch Location:</label>
-                            <select class="form-control select2" name="Location" value="{{$member->Location}}">
-                                <option value="1" selected>Abuja</option>
-                                <option value="2">Lagos</option>
-                                <option value="2">Kano</option>
-                                <option value="2">Kaduna</option>
+                            <select class="form-control select2" name="LocationID" value="{{$member->LocationID}}">
+                                <option value="">Select Branch</option>
+                                    @foreach ($branch as $id=>$branch)
+                                        <option value="{{$id}}"{{($id == $member->LocationID) ? 'selected' : ''}}>{{$branch}}</option>
+                                    @endforeach
                             </select>
                         </div>
                     </div>
@@ -173,8 +168,9 @@
                         <div class="form-group">
                             <label>Gender:</label>
                             <select class="form-control select2" name="gender" value="{{$member->gender}}">
-                                <option value="1" selected>Male</option>
-                                <option value="2">Female</option>
+                                <option value="{{$member->gender}}" selected>{{$member->gender}}</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                             </select>
                         </div>
                     </div>
@@ -200,7 +196,7 @@
                     <div class="form-group col-sm-4">
                         <label>Date Joined:</label>
                         <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                            <input type="text" name="joined_date" class="form-control datetimepicker-input" data-target="#reservationdate" value="{{$member->joined_date}}" />
+                            <input type="text" name="joined_date" required class="form-control datetimepicker-input" data-target="#reservationdate" value="{{$member->joined_date}}" />
                             <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -235,8 +231,15 @@
                         <div class="form-group">
                             <label>Bank:</label>
                             <select class="form-control select2" name="BankID" value="{{$member->BankID}}">
-                                <option value="1" selected>GTBank</option>
-                                <option value="2">First Bank</option>
+                                <option value="">Select Bank</option>
+                                @foreach ($bank as $id=>$account_name)
+                                    <option value="{{$id}}"
+                                        @if($id == $member->BankID)
+                                        selected
+                                        @endif
+                                        >{{$account_name}}</option>
+
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -249,19 +252,11 @@
 
                 </div>
 
-
                 <div class="form-group">
                     <input type="submit" class="btn btn-info" value="Save">
                 </div>
-
-
-
-
-
             </form>
         </div>
-
-
     </div>
 </section>
 @endsection

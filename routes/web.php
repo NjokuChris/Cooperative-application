@@ -24,6 +24,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('/admin/members', App\Http\Controllers\Admin\MembersController::class);
 Route::resource('/admin/company', App\Http\Controllers\Admin\CompaniesController::class);
 
+Route::get('/user', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('user');
+
 Route::resource('/admin/loans', App\Http\Controllers\Admin\LoansController::class);
 Route::get('/findMembers', [App\Http\Controllers\Admin\LoansController::class, 'getMember']);
 Route::get('/getAccounts', [App\Http\Controllers\Admin\AccountsController::class, 'getAccounts']);
@@ -39,9 +41,13 @@ Route::resource('/admin/products', App\Http\Controllers\Admin\ProductsController
 Route::resource('/admin/prod_category', App\Http\Controllers\Admin\Product_categoryController::class);
 Route::resource('/admin/users', App\Http\Controllers\Admin\UsersController::class);
 Route::resource('/admin/roles', App\Http\Controllers\Admin\RolesController::class);
+Route::resource('/admin/title', App\Http\Controllers\Admin\TitleControler::class);
 
 //Route::get('/users1', [App\Http\Controllers\UsersController::class,'index'])->name('index');
 Route::get('/users-list', [App\Http\Controllers\UsersController::class, 'usersList'])->name('usersList');
+
+Route::get('/members_search', [App\Http\Controllers\Reports\ReportsController::class, 'MembersSearch'])->name('members_search');
+Route::get('/members_report', [App\Http\Controllers\Reports\ReportsController::class, 'MembersReport'])->name('members_report');
 
 Route::get('search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
 Route::get('autocomplete', [App\Http\Controllers\SearchController::class, 'autocomplete'])->name('autocomplete');
@@ -54,6 +60,16 @@ Route::get('/admin', function () {
     return view('layouts/admin');
 });
 
-Route::get('/user', function () {
-    return view('user/dashboard');
+
+
+Route::get('send-mail', function () {
+
+    $details = [
+        'title' => 'Mail from ItSolutionStuff.com',
+        'body' => 'This is for testing email using smtp'
+    ];
+
+    \Mail::to('your_receiver_email@gmail.com')->send(new \App\Mail\MyTestMail($details));
+
+    dd("Email is Sent.");
 });

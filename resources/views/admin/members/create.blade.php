@@ -62,22 +62,20 @@
                             <div class="form-group">
                                 <label>Title</label>
                                 <select class="form-control select2" name="title" style="width: 100%;">
-                                    <option selected="selected">Mr.</option>
-                                    <option>Mrs</option>
-                                    <option>Miss</option>
-                                    <option>Dr.</option>
-                                    <option>PhD</option>
-                                    <option>Mallam</option>
-                                    <option>Prof.</option>
+                                    <option value="">Select Title</option>
+                                    @foreach ($title as $t)
+                                        <option value="{{$t->title}}">{{$t->title}}</option>
+                                    @endforeach
+
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                    <!--    <div class="col-md-3">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Members No:</label>
-                                <input type="text" class="form-control" name="member_no">
+                                <input type="text" class="form-control" name="member_no" required>
                             </div>
-                        </div>
+                        </div>-->
 
                     </div>
 
@@ -85,13 +83,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Fist Name</label>
-                                <input type="text" class="form-control" name="firstName">
+                                <input type="text" class="form-control" name="firstName" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Sur Name</label>
-                                <input type="text" class="form-control" name="surName">
+                                <input type="text" class="form-control" name="surName" required>
                             </div>
                         </div>
                         <div class="col-md-4">
@@ -125,7 +123,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="bmd-label-floating">Saving Amount</label>
-                                <input type="text" class="form-control" name="savings_amount">
+                                <input type="text" class="form-control" name="savings_amount" required>
                             </div>
                         </div>
 
@@ -170,14 +168,14 @@
                                 <label>Gender:</label>
                                 <select class="form-control select2" name="gender">
                                     <option value="Male" selected>Male</option>
-                                    <option value="Male">Female</option>
+                                    <option value="Female">Female</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group col-sm-4">
                             <label>Date of Birth:</label>
                             <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                <input type="text" name="date_birth" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                <input type="text" name="date_birth" class="form-control datetimepicker-input" required data-target="#reservationdate" />
                                 <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -196,7 +194,7 @@
                         <div class="form-group col-sm-4">
                             <label>Date Joined:</label>
                             <div class="input-group date" id="reservationdate1" data-target-input="nearest">
-                                <input type="text" name="joined_date" class="form-control datetimepicker-input" data-target="#reservationdate1" />
+                                <input type="text" name="joined_date" class="form-control datetimepicker-input" required data-target="#reservationdate1" />
                                 <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
@@ -229,9 +227,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Bank:</label>
-                                <select class="form-control select2" name="gender">
-                                    <option value="1" selected>GTBank</option>
-                                    <option value="2">First Bank</option>
+                                <select class="form-control select2" name="BankID">
+                                    <option value="">Select Bank</option>
+                                    @foreach ($bank as $b)
+                                        <option value="{{$b->id}}">{{$b->account_name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>

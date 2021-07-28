@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Models\Title;
 use Illuminate\Http\Request;
 
-class OrdersController extends Controller
+class TitleControler extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +15,9 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
+
+        $title = Title::all();
+        return view('admin.title.index', ['title' => $title]);
     }
 
     /**
@@ -27,7 +27,7 @@ class OrdersController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.title.create');
     }
 
     /**
@@ -36,18 +36,22 @@ class OrdersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, title $title)
     {
-        //
+        $title->title = $request->title;
+        $title->save();
+
+        return redirect('admin/title');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Title  $title
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Title $title)
     {
         //
     }
@@ -55,34 +59,39 @@ class OrdersController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Title  $title
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Title $title)
     {
-        //
+        return view('admin.title.edit', ['title' => $title]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Title  $title
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Title $title)
     {
-        //
+        $title->title = $request->title;
+        $title->save();
+
+        return redirect('admin/title');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Title  $title
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Title $title)
     {
-        //
+        $title->delete();
+
+        return redirect('/admin/title');
     }
 }

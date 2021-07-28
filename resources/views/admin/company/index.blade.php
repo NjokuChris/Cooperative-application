@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-  
+
    <!-- Content Header (Page header) -->
     <div class="content-header">
       <div class="container-fluid">
@@ -30,20 +30,21 @@
                     <tr>
                         <th>Member ID</th>
                         <th>Company Name</th>
-                        <th>Company Code</th>   
-                        <th>Action</th>                 
+                        <th>Company Code</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
-                    
+
                     @foreach($companies as $c)
                     <tr>
                         <td>{{$c->company_id}}</td>
                         <td>{{$c->company_name}}</td>
                         <td>{{$c->company_code}}</td>
-
+                        <td>{{$c->status}}</td>
                         <td><a href="{{route('company.edit',$c->company_id) }}" class="btn btn-info">Edit</a>  <a href="#" class="btn btn-danger">Delete</a></td>
                     </tr>
                     @endforeach
-                    
+
                 </table>
             </div>
         </section>

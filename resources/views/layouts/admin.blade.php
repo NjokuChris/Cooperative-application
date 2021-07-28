@@ -113,6 +113,23 @@
                         <i class="fas fa-th-large"></i>
                     </a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user-cog"></i>
+
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">{{ Auth::user()->name }}</span>
+                        <div class="dropdown-divider"></div>
+                        <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                <i class="nav-icon fa fa-sign-out-alt text-danger"></i>
+                                {{ __('Logout') }}
+                            </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="nav-link"><i class="nav-icon fa fa-exchange-alt text-warning"></i>Password Rest</a>
+                    </div>
+                </li>
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -135,7 +152,7 @@
                             alt="User Image">
                     </div>
                     <div class="info">
-                        <a href="#" class="d-block">Njoku Chris</a>
+                        <a href="#" class="d-block">{{ Auth::user()->name }}</a>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
@@ -148,6 +165,7 @@
                         $segment = Request::segment(2);
                         $segment1 = Request::segment(3);
                         ?>
+                        @can('admin')
                         <li class="nav-item menu-open">
                             <a href="{{ route('home') }}" class="nav-link
             @if (!$segment) active @endif ">
@@ -158,6 +176,8 @@
                                 </p>
                             </a>
                         </li>
+                        @endcan
+
 
                         @can('admin')
                         <li class="nav-item">
@@ -195,17 +215,26 @@
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
-                                    Self Help
+                                    Self Service
                                     <i class="fas fa-angle-left right"></i>
                                 </p>
                             </a>
                             <ul class="nav nav-treeview">
+                                <li class="nav-item menu-open">
+                                    <a href="{{ route('user') }}" class="nav-link">
+
+                                          <i class=" nav-icon fas fa-tachometer-alt"></i>
+                                        <p>
+                                            Self Dashboard
+                                        </p>
+                                    </a>
+                                </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ route('loans.create') }}" class="nav-link">
+                                    <a href="{{ route('loans.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>
-                                            Self
+                                            Loan Application
 
                                         </p>
                                     </a>
@@ -213,10 +242,21 @@
                                 <li class="nav-item">
                                     <a href="{{ route('loans.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Self</p>
+                                        <p>Cash Withdrawers</p>
                                     </a>
                                 </li>
-
+                                <li class="nav-item">
+                                    <a href="{{ route('loans.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Statement of Account</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('loans.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Loan Ledger</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
@@ -414,6 +454,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('title.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Create Title</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('prod_category.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Create Product Category</p>
@@ -453,6 +499,12 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
+                                    <a href="{{ route('members_search')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Members Report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('company.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Loans Report</p>
@@ -466,6 +518,26 @@
                                     </a>
                                 </li>
 
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link
+                                @if ($segment=='setups' ) active @endif">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Alumni
+                                    <i class="fas fa-angle-left right"></i>
+
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('members_search')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>List of Alumni</p>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
 
