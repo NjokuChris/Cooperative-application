@@ -97,6 +97,7 @@ class MembersController extends Controller
        $member->photo = $file;
        $member->posted_by = $request->posted_by;
        $member->title = $request->title;
+       $member->membership_charges = $request->membership_charges;
 
        $member->save();
 
@@ -190,6 +191,7 @@ class MembersController extends Controller
         $member->photo = $file;
         $member->posted_by = $request->posted_by;
         $member->title = $request->title;
+        $member->membership_charges = $request->membership_charges;
         $member->save();
         return redirect('admin/members');
     }

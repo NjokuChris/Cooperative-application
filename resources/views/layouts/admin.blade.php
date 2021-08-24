@@ -168,15 +168,16 @@
                         @can('admin')
                         <li class="nav-item menu-open">
                             <a href="{{ route('home') }}" class="nav-link
-            @if (!$segment) active @endif ">
+                                @if (!$segment) active @endif ">
 
-              <i class=" nav-icon fas fa-tachometer-alt"></i>
+                             <i class=" nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
                                 </p>
                             </a>
                         </li>
                         @endcan
+
 
 
                         @can('admin')
@@ -207,6 +208,8 @@
                             </ul>
                         </li>
                         @endcan
+
+
 
 
 
@@ -289,9 +292,9 @@
 
                             </ul>
                         </li>
-                        @endcan
 
-                        @can('admin')
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -319,9 +322,9 @@
                                 </li>
                             </ul>
                         </li>
-                        @endcan
 
-                        @can('admin')
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -349,9 +352,9 @@
                                 </li>
                             </ul>
                         </li>
-                        @endcan
 
-                        @can('admin')
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -379,9 +382,9 @@
                                 </li>
                             </ul>
                         </li>
-                        @endcan
 
-                        @can('admin')
+
+
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -546,6 +549,26 @@
                                 @if ($segment=='setups' ) active @endif">
                                 <i class="nav-icon fas fa-copy"></i>
                                 <p>
+                                    Entries
+                                    <i class="fas fa-angle-left right"></i>
+
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('coop_process.index')}}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Monthly Process</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link
+                                @if ($segment=='setups' ) active @endif">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
                                     Services
                                     <i class="fas fa-angle-left right"></i>
 
@@ -688,9 +711,9 @@
     </script>
 
     <script>
-        @if (session('message'))
-            // alert('{{ session('message') }}');
-            // @endif
+        @if (session('message2'))
+             swal("Failed","{{ session('message2') }}","error");
+             @endif
 
         @if (session('message'))
             swal("Success","{{ session('message') }}","success",{

@@ -9,6 +9,8 @@ class Loans_type extends Model
 {
     use HasFactory;
 
+    protected $table = 'loans_type';
+
     public function Loans()
     {
         return $this->hasMany(Loans::class);

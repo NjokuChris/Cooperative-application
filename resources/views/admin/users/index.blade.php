@@ -82,8 +82,8 @@
                             @endif
                         </td>
                         <td>
-                            <a href="/admin/users/{{ $u['id']}}"><i class="fa fa-eye"></i></a>
-                            <a href="/admin/users/{{ $u['id']}}/edit"><i class="fa fa-edit"></i></a>
+                            <a href="{{route('users.show',$u->id) }}"><i class="fa fa-eye"></i></a>
+                            <a href="{{route('users.edit',$u->id) }}"><i class="fa fa-edit"></i></a>
                             <a href="#" data-toggle="modal" data-target="#deleteModal" data-userid="{{$u['id']}}"><i class="fa fa-user-times"></i></a>
                         </td>
 

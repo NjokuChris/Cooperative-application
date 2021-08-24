@@ -60,8 +60,7 @@ class UsersController extends Controller
             'email' => 'required|unique:users|email',
             's_name' => 'required',
             'f_name' => 'required',
-            'm_name' => 'required',
-            'password' => 'required|between:8,255|confirmed',
+            'password' => 'required|between:7,255|confirmed',
             'password_confirmation' =>'required'
 
         ]);
@@ -71,6 +70,7 @@ class UsersController extends Controller
         $user->s_name = $request->s_name;
         $user->f_name = $request->f_name;
         $user->m_name = $request->m_name;
+        $user->member_id = $request->member_id;
         $user->is_member = $request->is_member == null ? 0 : $request->is_member;
 
         if($request->password != null){

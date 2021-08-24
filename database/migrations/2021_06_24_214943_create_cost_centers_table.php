@@ -14,10 +14,10 @@ class CreateCostCentersTable extends Migration
     public function up()
     {
         Schema::create('cost_centers', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('cost_center');
             $table->unsignedInteger('cost_center_type_id');
-            $table->foreign('cost_center_type_id')->references('id')->on('cost_center_type');
+           // $table->foreign('cost_center_type_id')->references('id')->on('cost_center_type');
             $table->unsignedInteger('location_id');
             $table->boolean('status');
             $table->timestamps();

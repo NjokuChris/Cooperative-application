@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use phpDocumentor\Reflection\Types\Nullable;
 
 class CreateAccountsTable extends Migration
 {
@@ -23,7 +24,7 @@ class CreateAccountsTable extends Migration
             $table->integer('account_group_id');
             $table->integer('account_no');
             $table->boolean('status');
-            $table->string('posted_by')>nullValue();
+            $table->string('posted_by')->nullable();
             $table->timestamps();
         });
     }

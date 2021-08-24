@@ -63,7 +63,7 @@
                         <td>{{$m->member_id}}</td>
                         <td>{{$m->title}}</td>
                         <td>{{$m->member_name}}</td>
-                        <td>{{$m->savings_amount}}</td>
+                        <td>&#8358;{{number_format($m->savings_amount)}}</td>
                         <td>
                             @if($m->branch_location != null)
                             {{$m->branch_location->branch}}
@@ -135,12 +135,12 @@
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "responsive": true, "lengthChange": true, "autoWidth": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-sm-12:eq(0)');
     $('#example2').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "lengthChange": true,
       "searching": false,
       "ordering": true,
       "info": true,

@@ -31,7 +31,7 @@
     <section class="content">
       <div class="container-fluid">
           <p>
-            <a href="{{route('company.create')}}" class="btn btn-primary">Create New Company</a>
+            <a href="{{route('loans.create')}}" class="btn btn-primary">Post New Loan</a>
           </p>
         <div class="row">
           <div class="col-12">
@@ -51,8 +51,8 @@
                     <th>MEMBERS NAME</th>
                     <th>LOANS DATE</th>
                     <th>LOAN AMOUNT</th>
-                    <th>INTEREST %</th>
-                    <th>INTEREST AMOUNT</th>
+                    <th>Margin %</th>
+                    <th>Margin AMOUNT</th>
                     <th>POSTED BY</th>
                     <th>Action</th>
                   </tr>
@@ -61,13 +61,16 @@
 
                     @foreach($loans as $l)
                     <tr>
-                        <td>{{$l->loans_id}}</td>
-                        <td>{{$l->member_name}}</td>
-                        <td>{{$l->loans_date}}</td>
-                        <td>{{$l->loanamount}}</td>
-                        <td>{{$l->interest_rate}}</td>
-                        <td>{{$l->interestamount}}</td>
-                        <td>{{$l->posted_by}}</td>
+                        <td>{{$l->id}}</td>
+                        <td>{{$l->member->member_name}}</td>
+                        <td>{{$l->created_at}}</td>
+                        <td>&#8358;{{ number_format($l->loanamount) }}</td>
+                        <td>&#8358;{{number_format($l->interest_rate)}}</td>
+                        <td>&#8358;{{number_format($l->interestamount)}}</td>
+                        <td>
+                            @if($l->posted_by != null)
+                            {{$l->postedby->name}}</td>
+                            @endif
                         <td>
                             <div class="dropdown show">
                                 <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -75,12 +78,18 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a href="{{route('loans.show',$l->id) }}" class="dropdown-item">
+                                        <i class="nav-icon fas fa-eye" style="color: blue"></i>
+                                        View</a>
                                     <a href="{{route('loans.edit',$l->id) }}" class="dropdown-item">
-                                        <i class="nav-icon fas fa-copy" style="color: blue"></i>
-                                        Edit</a>
-                                    <a href="#" class="dropdown-item">
                                         <i class="nav-icon fas fa-cut" style="color: red"></i>
-                                        Terminate</a>
+                                        Cancel</a>
+                                    <a href="{{route('loans_pay.create') }}" class="dropdown-item">
+                                        <i class="nav-icon fas fa-copy" style="color: green"></i>
+                                        Cash Payments</a>
+                                   {{-- <a href="{{route('loans_suspend.create',$l->id) }}" class="dropdown-item">
+                                            <i class="nav-icon fas fa-cut" style="color: yellow"></i>
+                                            Suspend Loan</a> --}}
                                 </div>
                               </div>
                         </td>
@@ -91,16 +100,7 @@
 
                   </tbody>
                   <tfoot>
-                  <tr>
-                    <th>LOAN ID</th>
-                    <th>MEMBERS NAME</th>
-                    <th>LOANS DATE</th>
-                    <th>LOAN AMOUNT</th>
-                    <th>INTEREST %</th>
-                    <th>INTEREST AMOUNT</th>
-                    <th>POSTED BY</th>
-                    <th>Action</th>
-                  </tr>
+
                   </tfoot>
                 </table>
               </div>
@@ -138,7 +138,7 @@
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "responsive": true, "lengthChange": true, "autoWidth": false,"ordering": false,
       "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
     }).buttons().container().appendTo('#example1_wrapper .col-sm-12:eq(0)');
     $('#example2').DataTable({

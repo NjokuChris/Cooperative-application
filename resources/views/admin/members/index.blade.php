@@ -60,7 +60,7 @@
                         <td>{{$m->member_id}}</td>
                         <td>{{$m->title}}</td>
                         <td>{{$m->member_name}}</td>
-                        <td>{{$m->savings_amount}}</td>
+                        <td>{{ number_format($m->savings_amount) }}</td>
                         <td>
                             @if($m->branch_location != null)
                             {{$m->branch_location->branch}}

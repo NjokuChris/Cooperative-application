@@ -77,16 +77,12 @@
 
                             <div id="text" style="display:none">
                                 <div class="form-group row">
-                                    <label for="full_name"
-                                        class="col-md-4 col-form-label text-md-right">{{ __('Members Name') }}</label>
-
-                                    <div class="col-md-5">
-                                        <input id="full_name" type="text" class="form-control" name="name"
-                                            value="{{ old('name') }}">
-
+                                    <div class="input-field">
+                                        <label class="bmd-label-floating">Members Name</label>
+                                        <input type="text" id="autocomplete-input" name="name" class="autocomplete">
                                     </div>
                                     <div class="col-md-1">
-                                        <input id="member_no" type="text" class="form-control" name="member_no">
+                                        <input id="member_id" type="text" class="form-control" readonly name="member_id">
 
                                     </div>
                                 </div>
@@ -117,7 +113,7 @@
                                 <div class="col-md-6">
                                     <input id="s_name" type="text"
                                         class="form-control @error('s_name') is-invalid @enderror" name="s_name"
-                                        value="{{ old('s_name') }}" required autocomplete="s_name" autofocus>
+                                        value="{{ old('s_name') }}" id="s_name" required autocomplete="s_name" autofocus>
 
                                     @error('s_name')
                                         <span class="invalid-feedback" role="alert">
@@ -133,14 +129,9 @@
 
                                 <div class="col-md-6">
                                     <input id="m_name" type="text"
-                                        class="form-control @error('m_name') is-invalid @enderror" name="m_name"
-                                        value="{{ old('m_name') }}" required autocomplete="m_name" autofocus>
+                                        class="form-control" name="m_name"
+                                        value="{{ old('m_name') }}" autocomplete="m_name">
 
-                                    @error('m_name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                             </div>
 
@@ -151,7 +142,7 @@
                                 <div class="col-md-6">
                                     <input id="location" type="text"
                                         class="form-control @error('location') is-invalid @enderror" name="location"
-                                        value="{{ old('location') }}" required autocomplete="location" autofocus>
+                                        value="{{ old('location') }}"  autocomplete="location" autofocus>
 
                                     @error('location')
                                         <span class="invalid-feedback" role="alert">
@@ -196,6 +187,7 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/Autocomplete.js') }}"></script>
     <script>
         function myFunction() {
             // Get the checkbox
@@ -252,6 +244,32 @@
                 });
 
             });
+
+            $.ajax({
+                type: 'get',
+                url: "{{ url('findMembers') }}",
+                success: function(response) {
+                    console.log(response);
+                    var MembArray = response;
+                    var dataMemb = {};
+                    var dataMemb2 = {};
+                    for (var i = 0; i < MembArray.length; i++) {
+                        dataMemb[MembArray[i].member_name] = null;
+                        dataMemb2[MembArray[i].member_name] = MembArray[i];
+                    }
+                    console.log("dataMemb2");
+                    console.log(dataMemb2);
+                    $('input#autocomplete-input').autocomplete({
+                        data: dataMemb,
+                        onAutocomplete: function(reqdata) {
+                            console.log(reqdata);
+                            $('#member_id').val(dataMemb2[reqdata]['member_id']);
+                            $('#f_name').val(dataMemb2[reqdata]['firstName']);
+                            $('#s_name').val(dataMemb2[reqdata]['surName']);
+                        }
+                    });
+                }
+            })
 
         });
     </script>

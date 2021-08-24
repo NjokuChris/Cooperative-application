@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Members;
 use App\Models\withdrawer;
+use App\Models\Transactions;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class withdrawersContoller extends Controller
 {
@@ -39,15 +42,57 @@ class withdrawersContoller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, withdrawer $withdrawer)
+    public function store(Request $request, withdrawer $withdrawer, Transactions $transactions)
     {
-        $withdrawer->member_id = $request->member_id;
-        $withdrawer->amount = $request->amount;
-        $withdrawer->withdrawer_date = $request->withdrawer_date == null ? null : date(' Y-m-d', strtotime($request->withdrawer_date));
-        $withdrawer->transID = '2';
-        $withdrawer->save();
+        $valideatedData = $request->validate([
+            'member_id' => 'required|numeric|exists:members,member_id',
+            'amount' => 'required|numeric',
+            'withdrawer_date' => 'required|date'
+        ]);
+        $member = Members::where('member_id', $request->member_id)->where('member_status', 1)->firstOrFail();
+        if ($valideatedData['amount'] > $member->current_balance || $valideatedData['amount'] <= 0) {
+            return back()->with('message2', 'Transaction Declined!, Withdrawal amount can not be higher than Current Balance');
+        }
 
-        return back()->with('message', 'Cash Deposit saved successfully');
+        $member_id = $request->member_id;
+        $amount = $request->amount;
+        $running_balance = $member->current_balance;
+        $balance = $running_balance - $valideatedData['amount'];
+
+        // dd($request);
+
+        // DB::enableQueryLog();
+
+        DB::beginTransaction();
+
+        try {
+            DB::update('update members set current_balance = current_balance - ? where member_id = ?', [$amount, $member_id]);
+
+            $withdrawer->member_id = $valideatedData['member_id'];
+            $withdrawer->amount = $valideatedData['amount'];
+            $withdrawer->withdrawer_date = $valideatedData['withdrawer_date'] == null ? null : date(' Y-m-d', strtotime($valideatedData['withdrawer_date']));
+            $withdrawer->transID = '2';
+            $withdrawer->naration = $request->naration;
+            $withdrawer->save();
+
+             $transactions->member_id = $valideatedData['member_id'];
+             $transactions->amount = $valideatedData['amount'];
+             $transactions->transaction_date = $valideatedData['withdrawer_date'] == null ? null : date(' Y-m-d', strtotime($valideatedData['withdrawer_date']));
+             $transactions->trans_type_id = '3';
+             $transactions->naration = $request->naration;
+             $transactions->debit = $valideatedData['amount'];
+             $transactions->balance = $balance;
+             $transactions->save();
+
+            DB::commit();
+            //$erro = DB::getQueryLog();
+            //print_r($erro);
+            return back()->with('message', 'Cash Withdrawer saved successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('message2', 'Cash Withdrawer failled');
+        }
+
     }
 
     /**
@@ -69,7 +114,7 @@ class withdrawersContoller extends Controller
      */
     public function edit($id)
     {
-
+        return view('admin.withdrawers.edit');
     }
 
     /**
@@ -79,9 +124,25 @@ class withdrawersContoller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, withdrawer $withdrawer)
     {
-        //
+        $valideatedData = $request->validate([
+            'member_id' => 'required|numeric|exists:members,member_id',
+            'amount' => 'required|numeric',
+            'withdrawer_date' => 'required|date'
+        ]);
+        $member = Members::where('member_id', $request->member_id)->where('member_status', 1)->firstOrFail();
+        $withdrawer->member_id = $valideatedData['member_id'];
+        if ($valideatedData['amount'] > $member->current_balance || $valideatedData['amount'] <= 0) {
+            return back()->with('message2', 'Transaction Declined!, Withdrawal amount can not be higher than Current Balance');
+        }
+        $withdrawer->amount = $valideatedData['amount'];
+        $withdrawer->withdrawer_date = $valideatedData['withdrawer_date'] == null ? null : date(' Y-m-d', strtotime($valideatedData['withdrawer_date']));
+        $withdrawer->transID = '2';
+        $withdrawer->naration = $request->naration;
+        $withdrawer->save();
+
+        return back()->with('message', 'Cash Withdrawer saved successfully');
     }
 
     /**

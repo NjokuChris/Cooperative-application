@@ -19,7 +19,7 @@ class CreateLoansTable extends Migration
             $table->float('loanamount');
             $table->integer('tenor');
             $table->string('interest_rate');
-            $table->float('inerestamount');
+            $table->float('interestamount');
             $table->float('monthlydeduction');
             $table->float('total_payable_amount');
             $table->date('loans_date');
@@ -29,7 +29,6 @@ class CreateLoansTable extends Migration
             $table->integer('transID');
             $table->string('transcode')->nullable();
             $table->string('LoanstatusID')->nullable();
-            $table->string('posted_by');
             $table->integer('period_id')->nullable();
             $table->string('posted_by')->nullable();
             $table->timestamps();

@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>DataTables</h1>
+            <h1>Monthly Process</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">DataTables</li>
+              <li class="breadcrumb-item active">Monthly Process</li>
             </ol>
           </div>
         </div>
@@ -30,6 +30,9 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
+        <p>
+            <a href="{{route('coop_process.create')}}" class="btn btn-primary">New Monthly Process</a>
+            </p>
         <div class="row">
           <div class="col-12">
 
@@ -37,30 +40,34 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">DataTable with default features</h3>
+                <h3 class="card-title">List of Processed Months</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                    <th>Withdrawer ID</th>
-                    <th>Member Name</th>
-                    <th>Withdrawer Date</th>
-                    <th>Withdrawer Amount</th>
-                    <th>Posted By</th>
-
+                    <th>ID</th>
+                    <th>Payroll Month</th>
+                    <th>Processed By</th>
+                    <th>Processed Date</th>
+                    <th>Naration</th>
+                    <th>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-
-                    @foreach($withdrawers as $w)
+                    @foreach($coop_process as $c)
                     <tr>
-                        <td>{{$w->id}}</td>
-                        <td>{{$w->member_name}}</td>
-                        <td>{{$w->withdrawer_date}}</td>
-                        <td>{{$w->amount}}</td>
-                        <td>{{$w->posted_by}}</td>
+                        <td>{{$c->id}}</td>
+                        <td>{{$c->title}}</td>
+                        <td>{{$c->member_name}}</td>
+                        <td>
+                            @if($m->branch_location != null)
+                            {{$m->branch_location->branch}}
+                            @endif
+                        </td>
+
+                        <td>{{$c->joined_date}}</td>
                         <td>
                             <div class="dropdown show">
                                 <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,30 +75,22 @@
                                 </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a href="{{route('withdrawers.edit',$w->id) }}" class="dropdown-item">
+                                    <a href="{{route('members.show',$c->member_id) }}" class="dropdown-item">
+                                       {{-- <a href="/admin/members/{{ $m['member_id']}}"><i class="fa fa-eye"></i></a>--}}
+                                        <i class="nav-icon fas fa-eye" style="color: green"></i>
+                                        View</a>
+                                    <a href="{{route('members.edit',$c->member_id) }}" class="dropdown-item">
                                         <i class="nav-icon fas fa-copy" style="color: blue"></i>
                                         Edit</a>
-                                    <a href="#" class="dropdown-item">
-                                        <i class="nav-icon fas fa-cut" style="color: red"></i>
-                                        Terminate</a>
                                 </div>
                               </div>
                         </td>
+
                     </tr>
                     @endforeach
 
-
-
                   </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Withdrawer ID</th>
-                    <th>Member Name</th>
-                    <th>Withdrawer Date</th>
-                    <th>Withdrawer Amount</th>
-                    <th>Posted By</th>
-                  </tr>
-                  </tfoot>
+
                 </table>
               </div>
               <!-- /.card-body -->
@@ -133,7 +132,7 @@
     }).buttons().container().appendTo('#example1_wrapper .col-sm-12:eq(0)');
     $('#example2').DataTable({
       "paging": true,
-      "lengthChange": false,
+      "lengthChange": true,
       "searching": false,
       "ordering": true,
       "info": true,

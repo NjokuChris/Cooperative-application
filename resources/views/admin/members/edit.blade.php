@@ -206,12 +206,15 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <label class="bmd-label-floating">Membership Charges</label>
-                        &nbsp;&nbsp;&nbsp; Yes <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" value="yes" id="yesCheck" <?php echo ($member == 'yes') ? 'checked' : '' ?>>
-                        No <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" value="no" id="noCheck" <?php echo ($member == 'no') ? 'checked' : '' ?>><br>
-                        <div id="ifYes" style="visibility:hidden">
-                            Charge Amount <input type='text' id='yes' name='yes'><br>
+                            &nbsp;&nbsp;&nbsp; <label for="html" class="bmd-label-floating">Yes</label>
+                            <input type="radio" onclick="javascript:yesnoCheck();" value="1" name="is_staff" id="yesCheck" {{ ($member->is_staff=="1")? "checked" : ""}} >
+                            <label for="html" class="bmd-label-floating">No</label>
+                            <input type="radio" onclick="javascript:yesnoCheck();" name="is_staff" value="0" id="noCheck" {{ ($member->is_staff=="0")? "checked" : ""}}><br>
+                            <div id="ifYes" style="visibility:hidden">
+                                <label for="html" class="bmd-label-floating">Charges</label>
+                                 <input type='text' id='yes' name='membership_charges' value="{{$member->membership_charges}}"><br>
 
-                        </div>
+                            </div>
 
 
                         <!-- checkbox

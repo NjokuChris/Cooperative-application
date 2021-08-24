@@ -60,16 +60,7 @@
                                 <div class="col-md-1">
                                     <div class="">
                                         <label class="">code</label>
-                                        <input type="text" readonly id="member_id" required name="member_id">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-sm-3">
-                                <label>Loan Date:</label>
-                                <div class="input-group date" id="reservationdate1" data-target-input="nearest">
-                                    <input type="text" name="loans_date" class="form-control datetimepicker-input" required data-target="#reservationdate1" />
-                                    <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        <input type="text" readonly id="member_id" required name="members_id">
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +73,7 @@
                                     <select class="form-control select2" style="width: 100%;" required name="loan_type_id">
                                         <option value="">Select Loans Type</option>
                                         @foreach ($loans_type as $l)
-                                            <option value="{{ $l->salary_group_id }}">{{ $l->salary_group }}</option>
+                                            <option value="{{ $l->id }}">{{ $l->loans_type }}</option>
 
                                         @endforeach
                                     </select>
@@ -139,8 +130,8 @@
                                     <label class="bmd-label-floating">Payment Start Month</label>
                                     <select class="form-control select2" required style="width: 100%;" name="paystartperiod_id">
                                         <option value="">Select Payment Start Month</option>
-                                        @foreach ($payrollheaders as $p)
-                                            <option value="{{ $p->payroll_id }}">{{ $p->period_description }}</option>
+                                        @foreach ($period as $p)
+                                            <option value="{{ $p->period_id }}">{{ $p->period_description }}</option>
                                         @endforeach
                                    </select>
                                 </div>
@@ -219,12 +210,12 @@
                         dataMemb[MembArray[i].member_name] = null;
                         dataMemb2[MembArray[i].member_name] = MembArray[i];
                     }
-                    //console.log("dataMemb2");
+                   // console.log("dataMemb2");
                     //console.log(dataMemb2);
                     $('input#autocomplete-input').autocomplete({
                         data: dataMemb,
                         onAutocomplete: function(reqdata) {
-                          //  console.log(reqdata);
+                      //      console.log(reqdata);
                             $('#member_id').val(dataMemb2[reqdata]['member_id']);
                         }
                     });

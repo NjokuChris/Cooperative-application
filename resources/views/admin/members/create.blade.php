@@ -204,12 +204,11 @@
                     <div class="row">
                         <div class="col-sm-4">
                             <label class="bmd-label-floating">Membership Charges</label>
-                            &nbsp;&nbsp;&nbsp; Yes <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="yesCheck"> No <input type="radio" onclick="javascript:yesnoCheck();" name="yesno" id="noCheck"><br>
+                            &nbsp;&nbsp;&nbsp; Yes <input type="radio" onclick="javascript:yesnoCheck();" value="1" name="is_staff" id="yesCheck"> No <input type="radio" onclick="javascript:yesnoCheck();" name="is_staff" value="0" id="noCheck"><br>
                             <div id="ifYes" style="visibility:hidden">
-                                Charge Amount <input type='text' id='yes' name='yes'><br>
+                                Charge Amount <input type='text' id='yes' name='membership_charges'><br>
 
                             </div>
-
 
                             <!-- checkbox
                         <div class="form-group">

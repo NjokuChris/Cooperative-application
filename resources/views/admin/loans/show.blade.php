@@ -24,8 +24,11 @@
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
+            <p>
+                <a href="{{url()->previous()}}" class="btn btn-primary">Back to Loans</a>
+                </p>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-10">
                   <div class="card">
                     <div class="card-header">
                       <h3 class="card-title">Loan Application Records</h3>
@@ -35,29 +38,29 @@
                       <table class="table table-bordered">
 
                             <tr>
-                              <th style="width:50%">Loans ID:</th>
+                              <th>Loans ID:</th>
                               <td>{{$loans->id}}</td>
-                              <th style="width:50%">Loans Date:</th>
-                              <td>{{$loans->loans_date}}</td>
+                              <th>Loans Date:</th>
+                              <td>{{$loans->created_at}}</td>
                             </tr>
                             <tr>
                               <th>Member Name</th>
-                              <td>{{$loans->title}}</td>
-                              <th>Location</th>
-                              <td>{{$loans->title}}</td>
+                              <td>{{$loans->member->member_name}}</td>
+                              <th>Tenor</th>
+                              <td>{{$loans->tenor}}</td>
                             </tr>
                             <tr>
                               <th>Loan Amount:</th>
-                              <td>{{$loans->loanamount}}</td>
-                              <th>Interest Rate:</th>
+                              <td>{{number_format($loans->loanamount)}}</td>
+                              <th>Margin:</th>
                               <td>{{$loans->interest_rate}}</td>
                             </tr>
                             <tr>
 
-                              <th>Interest Amount:</th>
-                              <td>{{$loans->loanamount}}</td>
+                              <th>Margin Amount:</th>
+                              <td>{{number_format($loans->loanamount)}}</td>
                               <th>Total Amount Payable:</th>
-                              <td>{{$loans->total_payable_amount}}</td>
+                              <td>{{number_format($loans->total_payable_amount)}}</td>
                             </tr>
 
                       </table>
@@ -93,7 +96,7 @@
                             <tr>
                                 <td>{{$l->payroll_id}}</td>
                                 <td>{{$l->period_description}}</td>
-                                <td>{{$l->amount2debit}}</td>
+                                <td>{{number_format($l->amount2debit)}}</td>
                             </tr>
                             @endforeach
 

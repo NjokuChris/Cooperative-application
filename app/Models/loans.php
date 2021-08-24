@@ -23,4 +23,14 @@ class Loans extends Model
     {
         return $this->hasMany(loans_schedule::class);
     }
+
+    public function member()
+    {
+        return $this->belongsTo(Members::class, 'members_id');
+    }
+
+    public function postedby()
+    {
+        return $this->belongsTo(User::class, 'posted_by');
+    }
 }

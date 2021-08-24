@@ -16,7 +16,7 @@ class CreateMembersTable extends Migration
         Schema::create('members', function (Blueprint $table) {
 
            $table->increments('member_id');
-           $table->string('member_no');
+           $table->string('member_no')->nullable();
            $table->string('title');
            $table->string('firstName');
            $table->string('middleName')->nullable();
@@ -42,7 +42,8 @@ class CreateMembersTable extends Migration
            $table->string('photo')->nullable();;
            $table->string('posted_by')->nullable();
            $table->string('member_status')->nullable();
-           $table->string('sub_acc_code')->nullable();;
+           $table->string('sub_acc_code')->nullable();
+           $table->double('membership_charges')->nullable();
            $table->timestamps();
         });
     }

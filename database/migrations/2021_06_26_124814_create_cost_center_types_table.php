@@ -14,7 +14,7 @@ class CreateCostCenterTypesTable extends Migration
     public function up()
     {
         Schema::create('cost_center_types', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->string('cost_center_type');
             $table->timestamps();
         });

@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Loans;
 use App\Models\Loans_schedule;
 use App\Models\Members;
-use App\Models\members_views;
 use App\Models\Loans_type;
+use App\Models\Payrollheaders;
 use App\Models\period;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+
+
 
 
 class LoansController extends Controller
@@ -27,7 +30,8 @@ class LoansController extends Controller
      */
     public function index()
     {
-        $arr['loans'] = loans::all();
+
+        $arr['loans'] = loans::orderBy('id', 'desc')->get();
         return view('admin.loans.index')->with($arr);
 
         //return view('admin.loans.index');
@@ -40,9 +44,9 @@ class LoansController extends Controller
      */
     public function create()
     {
-        $arr['loans_type'] = Loans_type::all();
-        $arr['period'] = period::select(['period_id','period_description'])
-        ->where('status', '1')->get();
+        $arr['loans_type'] = Loans_type::select(['salary_group_id','salary_group'])->get();
+        $arr['payrollheaders'] = Payrollheaders::select(['payroll_id','period_description'])
+        ->where('publish_id', '1')->get();
         return view('admin.loans.create')->with($arr);
     }
 
@@ -54,24 +58,49 @@ class LoansController extends Controller
      */
     public function store(Request $request, Loans $loans)
     {
-        dd($request);
-        $loans->members_id = $request->members_id;
-        $loans->loanamount = $request->loanamount;
+        $request->validate([
+            'member_id' => 'required',
+            'amount1' => 'required',
+            'tenor' => 'required',
+            'interest_rate' => 'required',
+            'monthlydeduction' => 'required',
+            'loan_type_id' => 'required',
+            'paystartperiod_id' => 'required',
+
+
+        ]);
+
+        $id = Auth::id();
+
+
+        $interest_amount = $request->amount1 / 100 * $request->interest_rate;
+       // dd($request);
+
+       DB::beginTransaction();
+
+       try{
+        $loans->member_id = $request->member_id;
+        $loans->loanamount = $request->amount1;
         $loans->tenor = $request->tenor;
         $loans->interest_rate = $request->interest_rate;
-        $loans->interestamount = $request->interestamount;
+        $loans->interestamount =  $interest_amount;
         $loans->monthlydeduction = $request->monthlydeduction;
-        $loans->total_payable_amount = '10000';
+        $loans->total_payable_amount = $request->total_amount;
         $loans->loan_type_id = $request->loan_type_id;
-        $loans->paystartperiod_id = '200';
-        $loans->payendperiod_id = '205';
+        $loans->loans_date = $request->loans_date;
+        $loans->paystartperiod_id = $request->paystartperiod_id;
+        $loans->payendperiod_id = $request->paystartperiod_id + $request->tenor - 1;
         $loans->transID = '2';
+        $loans->posted_by = $id;
         $loans->save();
 
-        DB::select("call Proc_loans_schedule($loans->id)");
+        DB::statement("execute Proc_loans_schedule $loans->id ");
 
         return redirect("admin/loans/{$loans->id}")->with('message', 'Loan Application Booked Successfully!');
-
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('message2', 'Loan Transaction failled');
+        }
     }
 
     /**
@@ -125,7 +154,7 @@ class LoansController extends Controller
 
     public function getMember()
     {
-        $m=members_views::all();
+        $m=Members::where('member_status', 1)->get();
 
         return response()->json($m);
     }

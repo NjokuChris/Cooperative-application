@@ -8,7 +8,7 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="/admin/users/{{ $user->id }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{route('users.update', $user->id)}}" enctype="multipart/form-data">
                         @method('PATCH')
                         @csrf
 
@@ -148,7 +148,7 @@
                         </div>
 
                         @if($user->permissions->isNotEmpty())
-                            @if($rolePermissions != null)
+                            @if($rolePermission != null)
                             <div id="user_permissions_box">
                                 <label for="roles"> User Permissions</label>
                                 <div class="user_permissions_checkbox_list">

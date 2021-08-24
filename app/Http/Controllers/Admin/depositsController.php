@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Deposits;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Members;
+use App\Models\Transactions;
+
 
 class depositsController extends Controller
 {
@@ -39,15 +43,58 @@ class depositsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Deposits $deposits)
+    public function store(Request $request, Deposits $deposits,Transactions $transactions)
     {
-        $deposits->member_id = $request->member_id;
-        $deposits->amount = $request->amount;
-        $deposits->deposit_date = $request->deposit_date == null ? null : date(' Y-m-d', strtotime($request->deposit_date));
-        $deposits->transID = '2';
-        $deposits->save();
+        $validatedData = $request->validate([
+            'member_id'=>'required|numeric|exists:members,member_id',
+            'amount'=>'required|numeric',
+            'deposit_date' => 'required|date'
+        ]);
+        if($validatedData['amount'] <= 0){
+            return back()->with('message2', 'Transaction Declined!, Invalid Deposit Amount');
+        }
 
-        return back()->with('message', 'Cash Deposit saved successfully');
+        $member = Members::where('member_id', $request->member_id)->where('member_status', 1)->firstOrFail();
+
+        $member_id = $request->member_id;
+        $amount = $request->amount;
+        $running_balance = $member->current_balance;
+        $balance = $running_balance + $validatedData['amount'];
+
+       // dd($request);
+
+       // DB::enableQueryLog();
+
+        DB::beginTransaction();
+
+        try{
+            DB::update('update members set current_balance = current_balance + ? where member_id = ?', [$amount,$member_id]);
+
+            $deposits->member_id = $request->member_id;
+            $deposits->amount = $request->amount;
+            $deposits->deposit_date = $request->deposit_date == null ? null : date(' Y-m-d', strtotime($request->deposit_date));
+            $deposits->transID = '2';
+            $deposits->naration = $request->naration;
+            $deposits->save();
+
+            $transactions->member_id = $validatedData['member_id'];
+            $transactions->amount = $validatedData['amount'];
+            $transactions->transaction_date = $validatedData['deposit_date'] == null ? null : date(' Y-m-d', strtotime($validatedData['deposit_date']));
+            $transactions->trans_type_id = '3';
+            $transactions->naration = $request->naration;
+            $transactions->credit = $validatedData['amount'];
+            $transactions->balance = $balance;
+            $transactions->save();
+
+            DB::commit();
+            //$erro = DB::getQueryLog();
+            //print_r($erro);
+           return back()->with('message', 'Cash Deposit saved successfully');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('message2', 'Cash Deposit failled');
+        }
+
 
     }
 

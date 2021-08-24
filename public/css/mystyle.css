@@ -359,3 +359,6 @@ nav .input-field {
 .shadow-none {
     box-shadow: none!important;
 }
+form .error {
+    color: #ff0000;
+  }

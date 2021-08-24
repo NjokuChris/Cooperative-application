@@ -47,7 +47,7 @@
                                 <div class="col-md-2">
                                     <div class="">
                                         <label class="">code</label>
-                                        <input type="text" id="member_id" name="member_id">
+                                        <input type="text" id="member_id" readonly required name="member_id">
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Current Balance</label>
-                                    <input type="text" id="Balance" class="form-control">
+                                    <input type="text" id="current_balance" readonly class="form-control">
                                 </div>
                             </div>
 
@@ -66,7 +66,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Deposit Amount</label>
-                                    <input type="text" class="form-control" name="amount">
+                                    <input type="text" class="form-control" required name="amount">
                                 </div>
                             </div>
                         </div>
@@ -78,6 +78,15 @@
                                     <div class="input-group-append" data-target="#reservationdate1" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <!-- textarea -->
+                                <div class="form-group">
+                                    <label>Narration.</label>
+                                    <textarea class="form-control" rows="3" placeholder="Enter Naration..." name="naration"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -95,12 +104,12 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="{{ asset('js/Autocomplete.js') }}"></script>
     <script>
         $(document).ready(function() {
             $.ajax({
                 type: 'get',
-                url: 'http://localhost:8000/findMembers',
+                url: "{{ url('findMembers') }}",
                 success: function(response) {
                     console.log(response);
                     var MembArray = response;
@@ -117,7 +126,7 @@
                         onAutocomplete: function(reqdata) {
                             console.log(reqdata);
                             $('#member_id').val(dataMemb2[reqdata]['member_id']);
-                            $('#Balance').val(dataMemb2[reqdata]['CurrentBalance']);
+                            $('#current_balance').val(dataMemb2[reqdata]['current_balance']);
                         }
                     });
                 }
