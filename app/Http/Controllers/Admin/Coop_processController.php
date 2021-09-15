@@ -24,7 +24,7 @@ class Coop_processController extends Controller
      */
     public function index()
     {
-        $coop_process = Coop_process::orderBy('id', 'desc')->get();
+        $coop_process = Coop_process::orderBy('coop_processID', 'desc')->get();
         return view('admin.entries.index', ['coop_process' => $coop_process]);
 
     }

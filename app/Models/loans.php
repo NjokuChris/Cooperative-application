@@ -11,7 +11,7 @@ class Loans extends Model
 
     public function loans_type()
     {
-        return $this->belongsTo(loans_type::class, 'loan_type_id');
+        return $this->belongsTo(loans_type::class, 'loan_type_id','salary_group_id');
     }
 
     public function period()
@@ -23,10 +23,9 @@ class Loans extends Model
     {
         return $this->hasMany(loans_schedule::class);
     }
-
-    public function member()
+    public function members()
     {
-        return $this->belongsTo(Members::class, 'members_id');
+        return $this->hasOne(Members::class, 'member_id', 'member_id');
     }
 
     public function postedby()

@@ -457,6 +457,12 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
+                                    <a href="{{ route('customer.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Customers</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
                                     <a href="{{ route('title.index') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Create Title</p>
@@ -508,16 +514,33 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('company.index') }}" class="nav-link">
+                                    <a href="{{ route('loans_search') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Loans Report</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link
-                                        @if ($segment=='setups' ) active @endif ">
+                                    <a href="{{ route('deposit_search') }}" class="nav-link">
                                         <i class=" far fa-circle nav-icon"></i>
                                         <p>Cash Deposit Report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('withdraws_search') }}" class="nav-link">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Cash Withdrawer Report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('margin_search') }}" class="nav-link">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Margin Report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('margin_search') }}" class="nav-link">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Receipts Report</p>
                                     </a>
                                 </li>
 

@@ -23,7 +23,7 @@ class DashboardController extends Controller
 
         $arr['member'] = members::where('member_id',  Auth::user()->member_id )->first();
        $arr['loans'] = Loans::where([
-             'members_id' =>  Auth::user()->member_id,
+             'member_id' =>  Auth::user()->member_id,
              'pay_status' => 1
              ])->get();
 

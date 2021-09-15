@@ -11,7 +11,7 @@ class Members extends Model
 
     public function Company()
     {
-     return $this->belongsTo(company::class, 'company');
+     return $this->belongsTo(company::class, 'company_id','company_id');
     }
 
     public function branch_location()
@@ -61,6 +61,7 @@ class Members extends Model
        'photo',
        'posted_by',
        'title',
+       'company_id'
 
     ];
 }

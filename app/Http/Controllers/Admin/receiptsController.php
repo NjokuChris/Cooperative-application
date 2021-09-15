@@ -7,6 +7,8 @@ use App\Models\Pay_method;
 use App\Models\payments;
 use App\Models\receipts;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class receiptsController extends Controller
 {
@@ -45,18 +47,21 @@ class receiptsController extends Controller
      */
     public function store(Request $request, receipts $receipts)
     {
-        $receipts->subaccountcode = $request->subaccountcode;
+        $id = Auth::id();
+
+        $receipts->customer_id = $request->customer_id;
         $receipts->amount_paid = $request->amount_paid;
         $receipts->account_no = $request->account_no;
         $receipts->method_pay = $request->method_pay;
         $receipts->paid_by = $request->paid_by;
         $receipts->naration = $request->naration;
-        $receipts->posted_by = $request->posted_by;
+        $receipts->posted_by = $id;
         $receipts->save();
 
-        $m = 'The record for ' . strtoupper($receipts->paid_by). '  has been Successfully Saved to the Database.' ;
+        //$m = 'The record for ' . strtoupper($receipts->paid_by). '  has been Successfully Saved to the Database.' ;
         // Session::flash('statuscode','info');
-         return back()->with('message', $m);
+        return redirect("admin/receipt/{$receipts->id}")->with('message', 'The transaction has been receipted Successfully!');
+        // return back()->with('message', $m);
     }
 
     /**
@@ -67,7 +72,13 @@ class receiptsController extends Controller
      */
     public function show($id)
     {
-        //
+        $arr['receip'] = DB::table('receipts')
+             ->select(DB::raw('id,amount_paid,paid_by,naration,created_at,dbo.NumberToWords(amount_paid) as word'))
+             ->where('id', '=', $id)
+             ->first();
+
+                //return view('admin.receipts.show')->with($arr);
+        return view('admin.receipts.show', ['receipts' => receipts::findOrFail($id)])->with($arr);
     }
 
     /**

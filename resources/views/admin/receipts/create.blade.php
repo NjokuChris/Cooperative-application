@@ -47,7 +47,7 @@
                                 <div class="col-md-2">
                                     <div class="">
                                         <label class="">code</label>
-                                        <input type="text" id="member_id">
+                                        <input type="text" readonly id="customer_id" name='customer_id'>
                                     </div>
                                 </div>
                             </div>
@@ -58,13 +58,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Amount Paid</label>
-                                    <input type="text" class="form-control"  name="company_code">
+                                    <input type="text" class="form-control"  name="amount_paid">
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Paid By</label>
-                                    <input type="text" class="form-control"  name="company_code">
+                                    <input type="text" class="form-control"  name="paid_by">
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Method of Payment</label>
-                                    <select class="form-control select2" id="pay_method" style="width: 100%;" name="company">
+                                    <select class="form-control select2" id="pay_method" style="width: 100%;" name="method_pay">
                                         <option value="">Select Method of Payment</option>
                                         @foreach ($pay_method as $p)
                                             <option value="{{$p->id}}">{{$p->pay_method}}</option>
@@ -85,7 +85,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label class="bmd-label-floating">Receiving Account</label>
-                                    <select class="form-control select2" style="width: 100%;" id="accounts" name="accounts">
+                                    <select class="form-control select2" style="width: 100%;" id="accounts" name="account_no">
                                     </select>
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <label>Receipts Description</label>
-                                    <textarea class="form-control" rows="3" placeholder="Enter Receipts Description..." name="H_address"></textarea>
+                                    <textarea class="form-control" rows="3" placeholder="Enter Receipts Description..." name="naration"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -112,7 +112,37 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('js/Autocomplete.js') }}"></script>
 <script type=text/javascript>
+
+        $(document).ready(function() {
+            $.ajax({
+                type: 'get',
+                url: "{{ url('findCustomers') }}",
+                success: function(response) {
+                    //console.log(response);
+                    var MembArray = response;
+                    var dataMemb = {};
+                    var dataMemb2 = {};
+                    for (var i = 0; i < MembArray.length; i++) {
+                        dataMemb[MembArray[i].customer_name] = null;
+                        dataMemb2[MembArray[i].customer_name] = MembArray[i];
+                    }
+                    //console.log("dataMemb2");
+                    //console.log(dataMemb2);
+                    $('input#autocomplete-input').autocomplete({
+                        data: dataMemb,
+                        onAutocomplete: function(reqdata) {
+                      //      console.log(reqdata);
+                            $('#customer_id').val(dataMemb2[reqdata]['id']);
+
+                        }
+                    });
+                }
+            })
+        });
+
+
     $('#pay_method').change(function(){
     var pay_methodID = $(this).val();
     if(pay_methodID){

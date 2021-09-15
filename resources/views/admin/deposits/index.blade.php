@@ -56,8 +56,8 @@
 
                     @foreach($deposits as $d)
                     <tr>
-                        <td>{{$d->deposit_id}}</td>
-                        <td>{{$d->Member_name}}</td>
+                        <td>{{$d->id}}</td>
+                        <td>{{$d->Members->Member_name}}</td>
                         <td>{{$d->deposit_date}}</td>
                         <td>{{$d->amount}}</td>
                         <td>{{$d->posted_by}}</td>

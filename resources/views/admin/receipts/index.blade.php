@@ -56,12 +56,33 @@
 
                     @foreach($receipts as $r)
                     <tr>
-                        <td>{{$r->receipts_id}}</td>
-                        <td>{{$r->customer_name}}</td>
-                        <td>{{$r->amount}}</td>
-                        <td>{{$r->receipt_date}}</td>
-                        <td>{{$r->posted_by}}</td>
-                        <td><a href="{{route('receipts.edit',$r->receipts_id) }}" class="btn btn-info">Edit</a>  <a href="#" class="btn btn-danger">Cancel</a></td>
+                        <td>{{$r->id}}</td>
+                        <td>{{$r->customer->customer_name}}</td>
+                        <td>{{$r->amount_paid}}</td>
+                        <td>{{$r->created_at}}</td>
+                        <td>{{$r->Posted_by->name}}</td>
+                        <td>
+                            <div class="dropdown show">
+                                <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Action
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <a href="{{route('receipt.show',$r->id) }}" class="dropdown-item">
+                                        <i class="nav-icon fas fa-eye" style="color: blue"></i>
+                                        View</a>
+                                    <a href="{{route('receipt.edit',$r->id) }}" class="dropdown-item">
+                                        <i class="nav-icon fas fa-cut" style="color: red"></i>
+                                        Adjust</a>
+                                    <a href="{{route('receipt.edit',$r->id) }}" class="dropdown-item">
+                                        <i class="nav-icon fas fa-copy" style="color: green"></i>
+                                        Cancle</a>
+                                   {{-- <a href="{{route('loans_suspend.create',$l->id) }}" class="dropdown-item">
+                                            <i class="nav-icon fas fa-cut" style="color: yellow"></i>
+                                            Suspend Loan</a> --}}
+                                </div>
+                              </div>
+                        </td>
                     </tr>
                     @endforeach
 
@@ -69,14 +90,7 @@
 
                   </tbody>
                   <tfoot>
-                  <tr>
-                    <th>Receipts ID</th>
-                    <th>Customer Name</th>
-                    <th>Receipts Amount</th>
-                    <th>Receipts Date</th>
-                    <th>Receipted By</th>
-                    <th>Action</th>
-                  </tr>
+
                   </tfoot>
                 </table>
               </div>

@@ -32,6 +32,8 @@ class LoansController extends Controller
     {
 
         $arr['loans'] = loans::orderBy('id', 'desc')->get();
+
+        //dd($arr);
         return view('admin.loans.index')->with($arr);
 
         //return view('admin.loans.index');
@@ -94,8 +96,8 @@ class LoansController extends Controller
         $loans->posted_by = $id;
         $loans->save();
 
-        DB::statement("execute Proc_loans_schedule $loans->id ");
-
+       DB::statement("execute Proc_loans_schedule $loans->id ");
+       DB::commit();
         return redirect("admin/loans/{$loans->id}")->with('message', 'Loan Application Booked Successfully!');
         } catch (\Exception $e) {
             DB::rollBack();

@@ -10,6 +10,7 @@ class Loans_type extends Model
     use HasFactory;
 
     protected $table = 'loans_type';
+    protected $primary = 'loans_type';
 
     public function Loans()
     {

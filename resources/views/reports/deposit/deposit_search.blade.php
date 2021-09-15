@@ -7,12 +7,12 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Search Members Report.</h1>
+                    <h1 class="m-0">Search Cash Deposit Report.</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item"><a href="{{ url('/home') }}">Home</a></li>
-                        <li class="breadcrumb-item">Cooperative Members</li>
+                        <li class="breadcrumb-item">Cash Deposit</li>
                     </ol>
                 </div><!-- /.col -->
             </div><!-- /.row -->
@@ -25,9 +25,9 @@
         <div class="container-fluid">
             <div class="card card-default">
                 <div class="card-header">
-                    <h3 class="card-title">Cooperative Members Report Search Form</h3>
+                    <h3 class="card-title">Cooperative Cash Deposit Report Search Form</h3>
                 </div>
-                <form method="post" action="{{ route('members_report')}}">
+                <form method="post" action="{{ route('deposit_report')}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @method('GET')
                     <!-- SELECT2 EXAMPLE -->
@@ -63,17 +63,6 @@
                                         @foreach ($branch as $b)
                                             <option value="{{$b->id}}">{{$b->branch}}</option>
 
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Company:</label>
-                                    <select class="form-control select2" name="company_id">
-                                        <option value="">Select Company</option>
-                                        @foreach ($company as $c)
-                                            <option value="{{$c->company_id}}">{{$c->company_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

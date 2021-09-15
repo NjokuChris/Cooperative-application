@@ -44,20 +44,18 @@
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table-bordered table-striped compact" style="width:100%">
                   <thead>
                   <tr>
                     <th>Member ID</th>
                     <th>Title</th>
                     <th>Name</th>
                     <th>Employee No.</th>
+                    <th>Company:</th>
                     <th>Phone Number</th>
                     <th>Gender</th>
                     <th>Savings Amount</th>
-                    <th>Bank</th>
-                    <th>Account Number</th>
                     <th>Current Balance</th>
-                    <th>Location</th>
                     <th>email</th>
                     <th>Date joined</th>
 
@@ -70,13 +68,11 @@
                         <td>{{$m->title}}</td>
                         <td>{{$m->member_name}}</td>
                         <td>{{$m->employee_no}}</td>
+                        <td>{{$m->Company->company_name}}</td>
                         <td>{{$m->phoneNo}}</td>
                         <td>{{$m->gender}}</td>
-                        <td>{{$m->savings_amount}}</td>
-                        <td>{{$m->bank}}</td>
-                        <td>{{$m->account_no}}</td>
-                        <td>{{$m->CurrentBalance}}</td>
-                        <td>{{$m->branch}}</td>
+                        <td>{{number_format($m->savings_amount)}}</td>
+                        <td>{{number_format($m->current_balance)}}</td>
                         <td>{{$m->email}}</td>
                         <td>{{$m->joined_date}}</td>
 

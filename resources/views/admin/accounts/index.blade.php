@@ -31,7 +31,7 @@
     <section class="content">
         <div class="container-fluid">
             <p>
-                <a href="{{route('accounts.create')}}" class="btn btn-primary">Create New Company</a>
+                <a href="{{route('accounts.create')}}" class="btn btn-primary">Create New Account</a>
                 </p>
             <div class="row">
                 <div class="col-12">
@@ -60,7 +60,7 @@
                                     @foreach ($accounts as $a)
                                         <tr>
                                             <td>{{ $a->id }}</td>
-                                            <td>{{ $a->account_code }}</td>
+                                            <td>{{ $a->accountcode }}</td>
                                             <td>{{ $a->account_name }}</td>
                                             <td>{{ $a->account_group->account_group }}</td>
                                             <td>{{ $a->account_class->account_class }}</td>
@@ -93,7 +93,7 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <<th>Member ID</th>
+                                        <th>Member ID</th>
                                             <th>Title</th>
                                             <th>Name</th>
                                             <th>Savings Amount</th>
@@ -139,7 +139,7 @@
         $(function() {
             $("#example1").DataTable({
                 "responsive": true,
-                "lengthChange": false,
+                "lengthChange": true,
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#example1_wrapper .col-sm-12:eq(0)');

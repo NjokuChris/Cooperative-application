@@ -62,14 +62,24 @@
                     @foreach($loans as $l)
                     <tr>
                         <td>{{$l->id}}</td>
-                        <td>{{$l->member->member_name}}</td>
+                        <td>
+                            @if ($l->members != null)
+                            {{ $l->members->member_name }}
+
+                            @else
+
+                            {{"Record Not Found"}}
+
+                            @endif
+
+                        </td>
                         <td>{{$l->created_at}}</td>
                         <td>&#8358;{{ number_format($l->loanamount) }}</td>
                         <td>&#8358;{{number_format($l->interest_rate)}}</td>
                         <td>&#8358;{{number_format($l->interestamount)}}</td>
                         <td>
                             @if($l->posted_by != null)
-                            {{$l->postedby->name}}</td>
+                            {{ $l->postedby->name }}</td>
                             @endif
                         <td>
                             <div class="dropdown show">

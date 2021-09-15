@@ -27,7 +27,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Cooperative Members Report Search Form</h3>
                 </div>
-                <form method="post" action="{{ route('members_report')}}">
+                <form method="post" action="{{ route('loans_report')}}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     @method('GET')
                     <!-- SELECT2 EXAMPLE -->
@@ -63,17 +63,6 @@
                                         @foreach ($branch as $b)
                                             <option value="{{$b->id}}">{{$b->branch}}</option>
 
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label>Company:</label>
-                                    <select class="form-control select2" name="company_id">
-                                        <option value="">Select Company</option>
-                                        @foreach ($company as $c)
-                                            <option value="{{$c->company_id}}">{{$c->company_name}}</option>
                                         @endforeach
                                     </select>
                                 </div>

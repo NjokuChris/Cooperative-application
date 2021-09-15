@@ -13,4 +13,14 @@ class receipts extends Model
     {
         return $this->belongsTo(Pay_method::class, 'method_pay');
     }
+
+    public function Customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
+
+    public function Posted_by()
+    {
+        return $this->belongsTo(User::class, 'posted_by');
+    }
 }

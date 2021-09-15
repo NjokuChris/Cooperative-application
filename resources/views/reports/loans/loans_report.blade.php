@@ -15,12 +15,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Monthly Process</h1>
+            <h1>LOANS</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Monthly Process</li>
+              <li class="breadcrumb-item active">LOANS</li>
             </ol>
           </div>
         </div>
@@ -30,9 +30,9 @@
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <p>
-            <a href="{{route('coop_process.create')}}" class="btn btn-primary">New Monthly Process</a>
-            </p>
+          <p>
+            <a href="{{route('loans.create')}}" class="btn btn-primary">Back to Search Form.</a>
+          </p>
         <div class="row">
           <div class="col-12">
 
@@ -40,53 +40,62 @@
 
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">List of Processed Months</h3>
+                <h3 class="card-title">LOANS Reports</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
+                <table id="example1" class="table-bordered table-striped compact">
                   <thead>
                   <tr>
-                    <th>ID</th>
-                    <th>Payroll Month</th>
-                    <th>Processed By</th>
-                    <th>Processed Date</th>
-                    <th>Action</th>
+                    <th>LOAN ID</th>
+                    <th>MEMBERS NAME</th>
+                    <th>LOANS DATE</th>
+                    <th>LOANS TYPE</th>
+                    <th>LOAN AMOUNT</th>
+                    <th>Margin %</th>
+                    <th>Margin AMOUNT</th>
+                    <th>Total Paid</th>
+                    <th>running Balance</th>
+                    <th>POSTED BY</th>
                   </tr>
                   </thead>
                   <tbody>
-                    @foreach($coop_process as $c)
+
+                    @foreach($loans as $l)
                     <tr>
-                        <td>{{$c->coop_processID}}</td>
-                        <td>{{$c->member_name}}</td>
+                        <td>{{$l->id}}</td>
                         <td>
-                            @if($c->branch_location != null)
-                            {{$m->branch_location->branch}}
+                            @if ($l->members != null)
+                            {{ $l->members->member_name }}
+
+                            @else
+
+                            {{"Record Not Found"}}
+
                             @endif
-                        </td>
 
-                        <td>{{$c->date_processed}}</td>
+                        </td>
+                        <td>{{$l->created_at}}</td>
+                        <td>{{$l->loans_type->salary_group}}</td>
+                        <td>&#8358;{{ number_format($l->loanamount) }}</td>
+                        <td>{{$l->interest_rate}}</td>
+                        <td>&#8358;{{number_format($l->interestamount)}}</td>
+                        <td>&#8358;{{number_format($l->total_amount_paid)}}</td>
+                        <td>&#8358;{{number_format($l->loanamount - $l->total_amount_paid)}}</td>
                         <td>
-                            <div class="dropdown show">
-                                <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Action
-                                </a>
-
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a href="{{route('coop_process.show',$c->coop_processID) }}" class="dropdown-item">
-                                       {{-- <a href="/admin/members/{{ $m['member_id']}}"><i class="fa fa-eye"></i></a>--}}
-                                        <i class="nav-icon fas fa-eye" style="color: green"></i>
-                                        View</a>
-
-                                </div>
-                              </div>
-                        </td>
+                            @if($l->posted_by != null)
+                            {{ $l->postedby->name }}</td>
+                            @endif
 
                     </tr>
                     @endforeach
 
-                  </tbody>
 
+
+                  </tbody>
+                  <tfoot>
+
+                  </tfoot>
                 </table>
               </div>
               <!-- /.card-body -->
@@ -128,9 +137,9 @@
     }).buttons().container().appendTo('#example1_wrapper .col-sm-12:eq(0)');
     $('#example2').DataTable({
       "paging": true,
-      "lengthChange": true,
+      "lengthChange": false,
       "searching": false,
-      "ordering": false,
+      "ordering": true,
       "info": true,
       "autoWidth": false,
       "responsive": true,
