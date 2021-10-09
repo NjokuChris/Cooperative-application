@@ -123,7 +123,7 @@ class UsersController extends Controller
 
         $userPermissions = $user->permissions;
 
-
+       //dd($userPermissions);
 
         return view('admin.users.edit', [
             'user'=>$user,
@@ -149,9 +149,8 @@ class UsersController extends Controller
             'email' => 'required',
             's_name' => 'required',
             'f_name' => 'required',
-            'm_name' => 'required',
-            'password' => 'required|between:8,255',
-            'password_confirmation' =>'required'
+            //'password' => 'required|between:8,255',
+          //  'password_confirmation' =>'required'
 
         ]);
 
@@ -183,7 +182,7 @@ class UsersController extends Controller
 
         }
 
-        return redirect('/admin/users');
+        return redirect()->route('users.index');
 
     }
 
@@ -197,6 +196,6 @@ class UsersController extends Controller
     {
         $user->delete();
 
-        return redirect('/admin/users');
+        return redirect()->route('users.index');
     }
 }

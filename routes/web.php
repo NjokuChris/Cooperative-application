@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 
 /*
@@ -35,6 +37,7 @@ Route::get('/getAccGroup', [App\Http\Controllers\Admin\AccountsController::class
 Route::get('/getAccType', [App\Http\Controllers\Admin\AccountsController::class, 'getAccType']);
 Route::get('/getAccTransType', [App\Http\Controllers\Admin\AccountsController::class, 'getAccTransType']);
 Route::get('/getPayrollMonth', [App\Http\Controllers\Admin\Coop_processController::class, 'getPayrollMonth']);
+Route::get('/getPayrollMonth1', [App\Http\Controllers\Reports\ReportsController::class, 'getPayrollMonth1']);
 Route::get('/getProduct', [App\Http\Controllers\Admin\ProductsController::class, 'getProduct']);
 Route::resource('/admin/branch', App\Http\Controllers\Admin\branch_locationsController::class);
 Route::resource('/admin/orders', App\Http\Controllers\Admin\OrdersController::class);
@@ -47,9 +50,22 @@ Route::resource('/admin/products', App\Http\Controllers\Admin\ProductsController
 Route::resource('/admin/prod_category', App\Http\Controllers\Admin\Product_categoryController::class);
 Route::resource('/admin/users', App\Http\Controllers\Admin\UsersController::class);
 Route::resource('/admin/roles', App\Http\Controllers\Admin\RolesController::class);
+Route::resource('/admin/permissions', App\Http\Controllers\Admin\permissionsController::class);
 Route::resource('/admin/title', App\Http\Controllers\Admin\TitleControler::class);
 Route::resource('/admin/coop_process', App\Http\Controllers\Admin\Coop_processController::class);
 Route::resource('/admin/customer', App\Http\Controllers\Admin\CustomerController::class);
+Route::resource('/admin/loanapprovalbin', App\Http\Controllers\Admin\LoansApprovalsController::class);
+Route::resource('/admin/withdrawerapproval', App\Http\Controllers\Admin\WithdrawerApprovalController::class);
+
+Route::resource('/admin/approval_stages', App\Http\Controllers\Admin\ApprovalStageController::class);
+Route::resource('/admin/process_module', App\Http\Controllers\Admin\ProcessModuleController::class);
+Route::resource('/admin/approval_flow', App\Http\Controllers\Admin\ApprovalFlowController::class);
+Route::resource('/admin/approval_master', App\Http\Controllers\Admin\ApprovalMasterController::class);
+
+// normal users route
+Route::resource('/user/members', App\Http\Controllers\User\MembersController::class, ['as'=>'user']);
+Route::resource('/user/loans', App\Http\Controllers\User\LoansController::class, ['as'=>'user']);
+Route::resource('/user/withdrawers', App\Http\Controllers\User\WithdrawerController::class, ['as'=>'user']);
 
 //Route::get('/users1', [App\Http\Controllers\UsersController::class,'index'])->name('index');
 Route::get('/users-list', [App\Http\Controllers\UsersController::class, 'usersList'])->name('usersList');
@@ -62,14 +78,19 @@ Route::get('/loans_report', [App\Http\Controllers\Reports\ReportsController::cla
 Route::get('/deposit_search', [App\Http\Controllers\Reports\ReportsController::class, 'DepositSearch'])->name('deposit_search');
 Route::get('/deposit_report', [App\Http\Controllers\Reports\ReportsController::class, 'DepositReport'])->name('deposit_report');
 Route::get('/withdraws_search', [App\Http\Controllers\Reports\ReportsController::class, 'withdrawerSearch'])->name('withdraws_search');
-Route::get('/withdraws_report', [App\Http\Controllers\Reports\ReportsController::class, 'withdrawerReport'])->name('withdraws_report');
+Route::get('/withdrawer_report', [App\Http\Controllers\Reports\ReportsController::class, 'withdrawerReport'])->name('withdrawer_report');
 Route::get('/margin_search', [App\Http\Controllers\Reports\ReportsController::class, 'MarginSearch'])->name('margin_search');
 Route::get('/margin_report', [App\Http\Controllers\Reports\ReportsController::class, 'MarginReport'])->name('margin_report');
 Route::get('/receipts_search', [App\Http\Controllers\Reports\ReportsController::class, 'ReceiptsSearch'])->name('receipts_search');
 Route::get('/receipts_report', [App\Http\Controllers\Reports\ReportsController::class, 'ReceiptsReport'])->name('receipts_report');
+Route::get('/deductions_report', [App\Http\Controllers\Reports\ReportsController::class, 'DeductionsReport'])->name('deductions_report');
+Route::get('/deductions_search', [App\Http\Controllers\Reports\ReportsController::class, 'DeductionSearch'])->name('deductions_search');
 
 Route::get('search', [App\Http\Controllers\SearchController::class, 'index'])->name('search');
 Route::get('autocomplete', [App\Http\Controllers\SearchController::class, 'autocomplete'])->name('autocomplete');
+
+Route::get('change-password', [App\Http\Controllers\ChangePasswordController::class, 'index']);
+Route::post('change-password', [App\Http\Controllers\ChangePasswordController::class, 'store'])->name('change.password');
 
 Route::get('admin/invoice/create',[App\Http\Controllers\InvoiceController::class,'create'])->name('create');
 Route::get('admin/api/product', [App\Http\Controllers\InvoiceController::class, 'getAutocompleteData'])->name('product');

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Members;
 use App\Models\Transactions;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\Auth;
 
 
 class depositsController extends Controller
@@ -70,11 +72,16 @@ class depositsController extends Controller
         try{
             DB::update('update members set current_balance = current_balance + ? where member_id = ?', [$amount,$member_id]);
 
+            $posted_by = Auth::id();
+            $deposit_id = IdGenerator::generate(['table' => 'deposits','field' => 'deposit_id', 'length' => 8, 'prefix' => 'DT-' ]);
+
+            $deposits->deposit_id = $deposit_id;
             $deposits->member_id = $request->member_id;
             $deposits->amount = $request->amount;
             $deposits->deposit_date = $request->deposit_date == null ? null : date(' Y-m-d', strtotime($request->deposit_date));
             $deposits->transID = '2';
             $deposits->naration = $request->naration;
+            $deposits->posted_by = $posted_by;
             $deposits->save();
 
             $transactions->member_id = $validatedData['member_id'];

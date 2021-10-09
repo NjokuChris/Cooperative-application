@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Approval_stages;
 use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -31,7 +32,9 @@ class RolesController extends Controller
      */
     public function create()
     {
-        return view('admin.roles.create');
+        $arr['approval_stage'] = Approval_stages::select(['id','approval_stage'])->get();
+        $arr['permissions'] = Permission::all()->pluck('name', 'id');
+        return view('admin.roles.create')->with($arr);
     }
 
     /**
@@ -51,23 +54,10 @@ class RolesController extends Controller
 
         //dd($request);
 
-        $role->name = $request->name;
-        $role->slug = $request->slug;
-        $role->save();
+        $role = Role::create($request->all());
+        $role->permissions()->sync($request->input('permissions', []));
 
-        $listofPermissions = explode(',', $request->role_permissions);//create array from seperated/comma
-       // dd($listofPermissions);
-
-        foreach ($listofPermissions as $key => $value) {
-            $permission = new Permission();
-            $permission->name = $value;
-            $permission->slug = strtolower(str_replace(" ", "-", $value));
-            $permission->save();
-            $role->permissions()->attach($permission->id);
-            $role->save();
-        }
-
-        return redirect('/admin/roles');
+        return redirect()->route('roles.index');
     }
 
     /**
@@ -89,7 +79,9 @@ class RolesController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('admin.roles.edit', ['role' => $role]);
+        $arr['approval_stage'] = Approval_stages::select(['id','approval_stage'])->get();
+        $arr['permissions'] = Permission::all()->pluck('name', 'id');
+        return view('admin.roles.edit', ['role' => $role])->with($arr);
 
     }
 
@@ -102,16 +94,15 @@ class RolesController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $request->validate([
-            'name' => 'required|unique:roles,name'
+        //$request->validate([
+          //  'name' => 'required'
 
-        ]);
+        //]);
 
-        $role->name = $request->name;
-        $role->slug = $request->slug;
-        $role->save();
+        $role->update($request->all());
+        $role->permissions()->sync($request->input('permissions', []));
 
-        return redirect('/admin/roles');
+        return redirect()->route('roles.index');
 
     }
 

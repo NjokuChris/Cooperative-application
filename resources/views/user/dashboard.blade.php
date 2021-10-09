@@ -97,8 +97,8 @@
            <!-- /.row -->
            <div class="card">
            <div class="card-header">
-            <h3 class="card-title"><i class="fa fa-book"></i>   &nbsp;&nbsp;<a href="#" style="text-align: left">Apply for Cash Withdrawer</a></h3>
-            <p style="text-align:right"><a href="#" style="text-align: left">Apply for Loan</a> <i class="fas fa-angle-double-right right"></i></p>
+            <h3 class="card-title"><i class="fa fa-book"></i>   &nbsp;&nbsp;<a href="{{ route('user.withdrawers.create') }}" style="text-align: left">Apply for Cash Withdrawer</a></h3>
+            <p style="text-align:right"><a href="{{ route('user.loans.create') }}" style="text-align: left">Apply for Loan</a> <i class="fas fa-angle-double-right right"></i></p>
            </div>
            </div>
            <!-- Main row -->

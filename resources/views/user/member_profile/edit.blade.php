@@ -107,10 +107,10 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Company</label>
-                            <select class="form-control select2" style="width: 100%;" name="company" value="{{$member->company}}">
+                            <select class="form-control select2" style="width: 100%;" name="company_id" value="{{$member->company_id}}">
                                 <option value="">Select Company</option>
                                 @foreach ($company as $company_id => $company_name)
-                                    <option value="{{ $company_id }}" {{ ( $company_id == $member->company) ? 'selected' : '' }}>{{$company_name}}
+                                    <option value="{{ $company_id }}" {{ ( $company_id == $member->company_id) ? 'selected' : '' }}>{{$company_name}}
                                       </option>
 
                                 @endforeach
@@ -126,7 +126,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label class="bmd-label-floating">Saving Amount</label>
-                            <input type="text" class="form-control" name="savings_amount" required value="{{$member->savings_amount}}">
+                            <input type="text" class="form-control" name="savings_amount" readonly required value="{{$member->savings_amount}}">
                         </div>
                     </div>
                 </div>
@@ -207,12 +207,12 @@
                     <div class="col-sm-4">
                         <label class="bmd-label-floating">Membership Charges</label>
                             &nbsp;&nbsp;&nbsp; <label for="html" class="bmd-label-floating">Yes</label>
-                            <input type="radio" onclick="javascript:yesnoCheck();" value="1" name="is_staff" id="yesCheck" {{ ($member->is_staff=="1")? "checked" : ""}} >
+                            <input type="radio" disabled onclick="javascript:yesnoCheck();" value="1" name="is_staff" id="yesCheck" {{ ($member->is_staff=="1")? "checked" : ""}} >
                             <label for="html" class="bmd-label-floating">No</label>
-                            <input type="radio" onclick="javascript:yesnoCheck();" name="is_staff" value="0" id="noCheck" {{ ($member->is_staff=="0")? "checked" : ""}}><br>
+                            <input type="radio" disabled onclick="javascript:yesnoCheck();" name="is_staff" value="0" id="noCheck" {{ ($member->is_staff=="0")? "checked" : ""}}><br>
                             <div id="ifYes" style="visibility:hidden">
                                 <label for="html" class="bmd-label-floating">Charges</label>
-                                 <input type='text' id='yes' name='membership_charges' value="{{$member->membership_charges}}"><br>
+                                 <input type='text' readonly id='yes' name='membership_charges' value="{{$member->membership_charges}}"><br>
 
                             </div>
 

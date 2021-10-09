@@ -107,10 +107,10 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Company</label>
-                            <select class="form-control select2" style="width: 100%;" name="company" value="{{$member->company}}">
+                            <select class="form-control select2" style="width: 100%;" name="company" value="{{$member->company_id}}">
                                 <option value="">Select Company</option>
                                 @foreach ($company as $company_id => $company_name)
-                                    <option value="{{ $company_id }}" {{ ( $company_id == $member->company) ? 'selected' : '' }}>{{$company_name}}
+                                    <option value="{{ $company_id }}" {{ ( $company_id == $member->company_id) ? 'selected' : '' }}>{{$company_name}}
                                       </option>
 
                                 @endforeach

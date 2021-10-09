@@ -5,9 +5,20 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\Loans;
 use Illuminate\Http\Request;
+use App\Models\Loans_type;
+use App\Models\Payrollheaders;
+use Illuminate\Support\Facades\Auth;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use App\Models\Loans_schedule;
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class LoansController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,11 @@ class LoansController extends Controller
      */
     public function index()
     {
-        //
+        $member_id = Auth::member_id();
+        $arr['loans'] = loans::where('member_id', $member_id)->orderBy('id', 'desc')->get();
+
+        //dd($arr);
+        return view('user.loans.index')->with($arr);
     }
 
     /**
@@ -25,7 +40,14 @@ class LoansController extends Controller
      */
     public function create()
     {
-        //
+        $firstapproval = collect(DB::select('SELECT dbo.GetFirstApproval(1) AS nb'))->first()->nb;
+
+        $arr['loans_type'] = Loans_type::select(['salary_group_id','salary_group'])->get();
+        $arr['payrollheaders'] = Payrollheaders::select(['payroll_id','period_description'])
+        ->where('publish_id', '1')->get();
+        $arr['approving_officer'] = User::select(['id','name'])
+        ->where('id', $firstapproval)->get();
+        return view('user.loans.create')->with($arr);
     }
 
     /**
@@ -34,9 +56,51 @@ class LoansController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Loans $loans)
     {
-        //
+        $request->validate([
+            //'member_id' => 'required',
+            'amount1' => 'required',
+            'tenor' => 'required',
+            'interest_rate' => 'required',
+            'monthlydeduction' => 'required',
+            'loan_type_id' => 'required',
+            'paystartperiod_id' => 'required',
+
+
+        ]);
+        $parameter = $request->first_approver;
+        $posted_by = Auth::id();
+        $member_id = Auth::user()->member_id;
+        $approval_stage_id =  collect(DB::select('SELECT dbo.GetApprovalStageID(?) AS nb', [$parameter]))->first()->nb;
+        $loans_id = IdGenerator::generate(['table' => 'Loans','field' => 'loans_id', 'length' => 8, 'prefix' => 'LN-' ]);
+
+       // dd($date);
+
+
+        $interest_amount = $request->amount1 / 100 * $request->interest_rate;
+       // dd($request);
+
+
+        $loans->loans_id = $loans_id;
+        $loans->member_id =$member_id;
+        $loans->loanamount = $request->amount1;
+        $loans->tenor = $request->tenor;
+        $loans->interest_rate = $request->interest_rate;
+        $loans->interestamount =  $interest_amount;
+        $loans->monthlydeduction = $request->monthlydeduction;
+        $loans->total_payable_amount = $request->total_amount;
+        $loans->loan_type_id = $request->loan_type_id;
+        $loans->loans_date = date('Y-m-d');
+        $loans->paystartperiod_id = $request->paystartperiod_id;
+        $loans->payendperiod_id = $request->paystartperiod_id + $request->tenor - 1;
+        $loans->transID = '2';
+        $loans->posted_by = $posted_by;
+        $loans->approval_stage_id = $approval_stage_id;
+        $loans->first_approver = $request->first_approver;
+        $loans->save();
+
+        return redirect("admin/loans/{$loans->id}")->with('message', 'Loan Application Booked Successfully!');
     }
 
     /**
@@ -45,9 +109,11 @@ class LoansController extends Controller
      * @param  \App\Models\Loans  $loans
      * @return \Illuminate\Http\Response
      */
-    public function show(Loans $loans)
+    public function show($id, Loans $loans)
     {
-        //
+        $arr['loans_schedule'] = Loans_schedule::select(['payroll_id','period_description','amount2debit'])
+        ->where('loans_id', $id)->get();
+        return view('admin.loans.show', ['loans' => loans::findOrFail($id)])->with($arr);
     }
 
     /**

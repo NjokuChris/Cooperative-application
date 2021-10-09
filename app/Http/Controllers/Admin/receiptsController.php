@@ -9,6 +9,7 @@ use App\Models\receipts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 class receiptsController extends Controller
 {
@@ -49,6 +50,10 @@ class receiptsController extends Controller
     {
         $id = Auth::id();
 
+        $receipts_id = IdGenerator::generate(['table' => 'receipts','field' => 'receipts_id', 'length' => 8, 'prefix' => 'RC-' ]);
+        //output: INV-000001
+
+        $receipts->receipts_id = $receipts_id;
         $receipts->customer_id = $request->customer_id;
         $receipts->amount_paid = $request->amount_paid;
         $receipts->account_no = $request->account_no;
@@ -56,6 +61,7 @@ class receiptsController extends Controller
         $receipts->paid_by = $request->paid_by;
         $receipts->naration = $request->naration;
         $receipts->posted_by = $id;
+        $receipts->receipt_date = date("Y-m-d");
         $receipts->save();
 
         //$m = 'The record for ' . strtoupper($receipts->paid_by). '  has been Successfully Saved to the Database.' ;

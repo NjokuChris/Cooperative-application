@@ -57,10 +57,21 @@
                     @foreach($withdrawers as $w)
                     <tr>
                         <td>{{$w->id}}</td>
-                        <td>{{$w->member_name}}</td>
+                        <td> @if ($w->members != null)
+                            {{ $w->members->member_name }}
+
+                            @else
+
+                            {{"Record Not Found"}}
+
+                            @endif</td>
                         <td>{{$w->withdrawer_date}}</td>
                         <td>{{$w->amount}}</td>
-                        <td>{{$w->posted_by}}</td>
+                        <td>
+                            @if($w->posted_by != null)
+                            {{ $w->postedby->name }}</td>
+                            @endif
+                        <td>
                         <td>
                             <div class="dropdown show">
                                 <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

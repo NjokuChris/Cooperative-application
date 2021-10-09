@@ -5,8 +5,6 @@
 <link rel="stylesheet" href="{{ asset('css/mystyle.css') }}">
 
 @endsection
-
-
 @section('content')
 <div id="invoice">
 
@@ -48,7 +46,7 @@
                         <div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
                     </div>
                     <div class="col invoice-details">
-                        <h1 class="invoice-id">LOANS ID # {{$loans->id}}</h1>
+                        <h1 class="invoice-id">LOANS ID # {{$loans->loans_id}}</h1>
                         <div class="date">Date of Loan: {{$loans->created_at}}</div>
 
                     </div>
@@ -63,13 +61,6 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                           <table class="table table-bordered">
-
-                                <tr>
-                                  <th>Loans ID:</th>
-                                  <td>{{$loans->id}}</td>
-                                  <th>Loans Date:</th>
-                                  <td>{{$loans->created_at}}</td>
-                                </tr>
                                 <tr>
                                   <th>Member Name</th>
                                   <td>{{$loans->members->member_name}}</td>
@@ -140,7 +131,7 @@
                 </div>
             </main>
             <footer>
-                Invoice was created on a computer and is valid without the signature and seal.
+                Loan was created on a computer and is valid without the signature and seal.
             </footer>
         </div>
         <!--DO NOT DELETE THIS div. IT is responsible for showing footer always at the bottom-->

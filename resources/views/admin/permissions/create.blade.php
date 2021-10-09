@@ -1,32 +1,80 @@
 @extends('layouts.admin')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/bootstrap-tagsinput.css') }}">
+@endsection
+
 @section('content')
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">{{ __('Register') }}</div>
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.permission.title_singular') }}
-    </div>
+                <div class="card-body">
+                    @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    <form method="POST" action="{{ route('permissions.store') }}">
 
-    <div class="card-body">
-        <form action="{{ route("admin.permissions.store") }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                <label for="title">{{ trans('cruds.permission.fields.title') }}*</label>
-                <input type="text" id="title" name="title" class="form-control" value="{{ old('title', isset($permission) ? $permission->title : '') }}" required>
-                @if($errors->has('title'))
-                    <em class="invalid-feedback">
-                        {{ $errors->first('title') }}
-                    </em>
-                @endif
-                <p class="helper-block">
-                    {{ trans('cruds.permission.fields.title_helper') }}
-                </p>
+                        {{ csrf_field() }}
+
+                            <div class="form-group row">
+                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                                <div class="col-md-5">
+                                    <input id="name" type="text" id="name" class="form-control" name="name">
+
+                                </div>
+                            </div>
+
+                        <div class="form-group row">
+                            <label for="slug" class="col-md-4 col-form-label text-md-right">{{ __('permission slug') }}</label>
+
+                            <div class="col-md-6">
+                                <input id="slug" type="text" id="slug" tag="slug" readonly class="form-control @error('slug') is-invalid @enderror" name="slug" required autocomplete="slug" autofocus>
+
+                                @error('slug')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="form-group row mb-0">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Submit') }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
-            </div>
-        </form>
-
-
+        </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('js/bootstrap-tagsinput.js') }}"></script>
+
+<script>
+    $(document).ready(function(){
+        $('#name').keyup(function(e){
+            var str = $('#name').val();
+            str = str.replace(/\W+(?!$)/g, '-').toLowerCase();//replace space with dash
+            $('#slug').val(str);
+            $('slug').atrr('placeholder', str);
+        });
+    });
+</script>
+@endpush
+
+

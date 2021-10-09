@@ -8,6 +8,8 @@ use App\Models\withdrawer;
 use App\Models\Transactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
+use Illuminate\Support\Facades\Auth;
 
 class withdrawersContoller extends Controller
 {
@@ -68,11 +70,16 @@ class withdrawersContoller extends Controller
         try {
             DB::update('update members set current_balance = current_balance - ? where member_id = ?', [$amount, $member_id]);
 
+            $withdrawer_id = IdGenerator::generate(['table' => 'withdrawers','field' => 'withdrawer_id', 'length' => 8, 'prefix' => 'WD-' ]);
+            $posted_by = Auth::id();
+
+            $withdrawer->withdrawer_id = $withdrawer_id;
             $withdrawer->member_id = $valideatedData['member_id'];
             $withdrawer->amount = $valideatedData['amount'];
             $withdrawer->withdrawer_date = $valideatedData['withdrawer_date'] == null ? null : date(' Y-m-d', strtotime($valideatedData['withdrawer_date']));
             $withdrawer->transID = '2';
             $withdrawer->naration = $request->naration;
+            $withdrawer->posted_by = $posted_by;
             $withdrawer->save();
 
              $transactions->member_id = $valideatedData['member_id'];

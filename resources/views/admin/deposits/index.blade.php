@@ -57,10 +57,21 @@
                     @foreach($deposits as $d)
                     <tr>
                         <td>{{$d->id}}</td>
-                        <td>{{$d->Members->Member_name}}</td>
+                        <td> @if ($d->members != null)
+                            {{ $d->members->member_name }}
+
+                            @else
+
+                            {{"Record Not Found"}}
+
+                            @endif</td>
                         <td>{{$d->deposit_date}}</td>
                         <td>{{$d->amount}}</td>
-                        <td>{{$d->posted_by}}</td>
+                        <td>
+                            @if($d->posted_by != null)
+                            {{ $d->postedby->name }}</td>
+                            @endif
+                        </td>
                         <td>
                             <div class="dropdown show">
                                 <a class="btn btn-success dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -30,9 +30,9 @@
                     </div>
                     <div class="col company-details">
                         <h2 class="name">
-                            <a target="_blank" href="https://lobianijs.com">
-                            MTL Cooperative
-                            </a>
+
+                            Media Trust Limited Cooperative Society.
+
                         </h2>
                         <div>20 P.O.W Mafemi Crescent, off Solomon Lar Way,</div>
                         <div>Utako District, Abuja.</div>
@@ -42,11 +42,11 @@
             <main>
                 <div class="row contacts">
                     <div class="col invoice-to">
-                        <div class="text-gray-light">RECEIPTS FOR:</div>
-                        <h2 class="to">{{$receipts->Customer->customer_name}}</h2>
+                        <div class="text-gray-light">RECEIPTS</div>
+
                     </div>
                     <div class="col invoice-details">
-                        <h1 class="invoice-id">receipts ID # {{$receipts->id}}</h1>
+                        <h1 class="invoice-id">receipts ID # {{$receipts->receipts_id}}</h1>
                         <div class="date">Receipts Date: {{$receipts->created_at}}</div>
 
                     </div>
@@ -61,7 +61,10 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                           <table class="table table-bordered">
-
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <td colspan="3">{{$receipts->Customer->customer_name}}</td>
+                                </tr>
 
                                 <tr>
                                   <th>Received From</th>

@@ -155,6 +155,7 @@
                                 <label for="role">Select Role</label>
 
                                 <select name="role" id="role" class="role form-control">
+                                    <option>Select Role</option>
                                     @foreach ($roles as $role)
                                    <option data-role-id="{{$role->id}}" data-role-slug="{{$role->slug}}" value="{{$role->id}}">{{$role->name}}</option>
 
@@ -166,11 +167,8 @@
                             <div id="permissions_box">
                                 <label for="roles"> Select Permissions</label>
                                 <div id="permissions_checkbox_list">
-
                                 </div>
-
                             </div>
-
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 offset-md-4">
                                     <button type="submit" class="btn btn-primary">
@@ -218,6 +216,8 @@
                 var role_id = role.data('role-id');
                 var role_slug = role.data('role-slug');
 
+                permissions_checkbox_list.empty();
+
                 $.ajax({
                     url: "/admin/users/create",
                     method: 'get',
@@ -227,7 +227,7 @@
                         role_slug: role_slug,
                     }
                 }).done(function(data) {
-                    console.log(data);
+                  //  console.log(data);
 
                    permissions_box.show();
                 //   permissions_checkbox_list.empty();

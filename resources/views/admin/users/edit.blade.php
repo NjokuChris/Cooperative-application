@@ -30,7 +30,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="new-password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -44,7 +44,7 @@
                             <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" autocomplete="new-password">
                             </div>
                         </div>
 
@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="form-group center">
 
-                           <label>Is Member:</label> <input type="checkbox" id="myCheck" name="is_member" value="{{ $user->is_member }}" onclick="myFunction()">
+                           <label>Is Member:</label> <input type="checkbox" id="myCheck" name="is_member" {{  ($user->is_member == 1 ? ' checked' : '') }} value="1" onclick="myFunction()">
 
                             </div>
                         </div>
@@ -66,7 +66,7 @@
 
                                 </div>
                                 <div class="col-md-1">
-                                    <input id="member_no" type="text" class="form-control" name="member_no" value="{{ $user->member_no }}">
+                                    <input id="member_no" type="text" class="form-control" name="member_no" value="{{ $user->member_id }}">
 
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                             <label for="m_name" class="col-md-4 col-form-label text-md-right">{{ __('Other Name') }}</label>
 
                             <div class="col-md-6">
-                                <input id="m_name" type="text" class="form-control @error('m_name') is-invalid @enderror" name="m_name" value="{{ $user->m_name }}" required autocomplete="m_name" autofocus>
+                                <input id="m_name" type="text" class="form-control @error('m_name') is-invalid @enderror" name="m_name" value="{{ $user->m_name }}" autocomplete="m_name" autofocus>
 
                                 @error('m_name')
                                     <span class="invalid-feedback" role="alert">
@@ -119,7 +119,7 @@
                             <label for="location" class="col-md-4 col-form-label text-md-right">{{ __('Location') }}</label>
 
                             <div class="col-md-6">
-                                <input id="location" type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ $user->location_id }}" required autocomplete="location" autofocus>
+                                <input id="location" type="text" class="form-control @error('location') is-invalid @enderror" name="location" value="{{ $user->location_id }}" autocomplete="location" autofocus>
 
                                 @error('location')
                                     <span class="invalid-feedback" role="alert">
@@ -134,7 +134,6 @@
                             <select name="role" id="role" class="role form-control">
                             @foreach ($roles as $role)
                                <option data-role-id="{{$role->id}}" data-role-slug="{{$role->slug}}" value="{{$role->id}}" {{ $user->roles->isEmpty() || $role->name != $userRole->name ? "" : "selected"}}>{{$role->name}}</option>
-
                             @endforeach
                             </select>
 
@@ -192,7 +191,7 @@
                 text.style.display = "block";
             } else {
                 text.style.display = "none";
-                text1.value = "";
+              //  text1.value = "";
             }
         }
     </script>

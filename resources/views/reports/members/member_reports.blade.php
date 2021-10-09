@@ -68,7 +68,16 @@
                         <td>{{$m->title}}</td>
                         <td>{{$m->member_name}}</td>
                         <td>{{$m->employee_no}}</td>
-                        <td>{{$m->Company->company_name}}</td>
+                        <td>
+                            @if ($m->Company != null)
+                            {{$m->Company->company_name}}
+
+                            @else
+
+                            {{"Record Not Found"}}
+
+                            @endif
+                            </td>
                         <td>{{$m->phoneNo}}</td>
                         <td>{{$m->gender}}</td>
                         <td>{{number_format($m->savings_amount)}}</td>

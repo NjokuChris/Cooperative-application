@@ -14,4 +14,9 @@ class Deposits extends Model
     {
         return $this->BelongsTo(Members::class, 'member_id', 'member_id');
     }
+
+    public function postedby()
+    {
+        return $this->belongsTo(User::class, 'posted_by');
+    }
 }

@@ -34,16 +34,20 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Member Name </label>
-                                    <input type="text" class="form-control" name="member_name">
+                            <div>
+                                <div class="col-md-5">
+                                    <div class="input-field form-group">
+                                        <label class="bmd-label-floating">Members Name</label>
+                                        <input type="text" id="autocomplete-input" class="autocomplete" name="member_name">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label class="bmd-label-floating">Member Number</label>
-                                    <input type="text" class="form-control" name="member_no">
+                            <div>
+                                <div class="col-md-1">
+                                    <div class="">
+                                        <label class="">code</label>
+                                        <input type="text"  id="member_id" name="member_no">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -145,3 +149,36 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script src="{{ asset('js/Autocomplete.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+
+            $.ajax({
+                type: 'get',
+                url: "{{ url('findMembers') }}",
+                success: function(response) {
+                   // console.log(response);
+                    var MembArray = response;
+                    var dataMemb = {};
+                    var dataMemb2 = {};
+                    for (var i = 0; i < MembArray.length; i++) {
+                        dataMemb[MembArray[i].member_name] = null;
+                        dataMemb2[MembArray[i].member_name] = MembArray[i];
+                    }
+                    //console.log("dataMemb2");
+                    //console.log(dataMemb2);
+                    $('input#autocomplete-input').autocomplete({
+                        data: dataMemb,
+                        onAutocomplete: function(reqdata) {
+                          //  console.log(reqdata);
+                            $('#member_id').val(dataMemb2[reqdata]['member_id']);
+                        }
+                    });
+                }
+            })
+        });
+    </script>
+
+@endpush

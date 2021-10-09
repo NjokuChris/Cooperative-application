@@ -12,6 +12,7 @@ use App\Models\Payrollheaders;
 use App\Models\period;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 
 
@@ -72,7 +73,8 @@ class LoansController extends Controller
 
         ]);
 
-        $id = Auth::id();
+        $posted_by = Auth::id();
+        $loans_id = IdGenerator::generate(['table' => 'Loans','field' => 'loans_id', 'length' => 8, 'prefix' => 'LN-' ]);
 
 
         $interest_amount = $request->amount1 / 100 * $request->interest_rate;
@@ -81,6 +83,7 @@ class LoansController extends Controller
        DB::beginTransaction();
 
        try{
+        $loans->loans_id = $loans_id;
         $loans->member_id = $request->member_id;
         $loans->loanamount = $request->amount1;
         $loans->tenor = $request->tenor;
@@ -93,7 +96,7 @@ class LoansController extends Controller
         $loans->paystartperiod_id = $request->paystartperiod_id;
         $loans->payendperiod_id = $request->paystartperiod_id + $request->tenor - 1;
         $loans->transID = '2';
-        $loans->posted_by = $id;
+        $loans->posted_by = $posted_by;
         $loans->save();
 
        DB::statement("execute Proc_loans_schedule $loans->id ");

@@ -28,7 +28,7 @@
                 <div class="card-header">
                     <h3 class="card-title">Cash Receipts Form</h3>
                 </div>
-                <form method="post" action="{{ route('receipt.store') }}" enctype="multipart/form-data">
+                <form onsubmit="return confirm('Click OK Submit Record to Database');" method="post" action="{{ route('receipt.store') }}" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                     <!-- SELECT2 EXAMPLE -->
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btn btn-info" value="Save">
+                            <input type="submit" onclick="callsweetalert(e);" class="btn btn-info" value="Save">
                         </div>
                     </div>
                 </form>

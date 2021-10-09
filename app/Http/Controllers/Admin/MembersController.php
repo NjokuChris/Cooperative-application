@@ -87,7 +87,7 @@ class MembersController extends Controller
        $member->phoneNo = $request->phoneNo;
        $member->is_staff = $request->is_staff;
        $member->employee_no = $request->employee_no;
-       $member->company = $request->company;
+       $member->company_id = $request->company_id;
        $member->date_birth = $request->date_birth == null ? null : date(' Y-m-d', strtotime($request->date_birth));
        $member->gender = $request->gender;
        $member->Home_location = $request->Home_location;
@@ -181,7 +181,7 @@ class MembersController extends Controller
         $member->phoneNo = $request->phoneNo;
         $member->is_staff = $request->is_staff;
         $member->employee_no = $request->employee_no;
-        $member->company = $request->company;
+        $member->company_id = $request->company_id;
         $member->date_birth = $request->date_birth == null ? null : date(' Y-m-d', strtotime($request->date_birth));
         $member->gender = $request->gender;
         $member->Home_location = $request->Home_location;
@@ -193,7 +193,8 @@ class MembersController extends Controller
         $member->title = $request->title;
         $member->membership_charges = $request->membership_charges;
         $member->save();
-        return redirect('admin/members');
+
+        return redirect()->route('members.show',$member->member_id)->with('message', 'Member details adjusted successfully');
     }
 
     /**

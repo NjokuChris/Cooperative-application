@@ -19,7 +19,9 @@ class permissionsController extends Controller
      */
     public function index()
     {
-        //
+        $permissions = Permission::orderBy('id', 'desc')->get();
+        //dd($permissions);
+        return view('admin.permissions.index', ['permissions' => $permissions]);
     }
 
     /**
@@ -29,7 +31,8 @@ class permissionsController extends Controller
      */
     public function create()
     {
-        //
+
+        return view('admin.permissions.create');
     }
 
     /**
@@ -40,7 +43,9 @@ class permissionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $permission = Permission::create($request->all());
+
+        return redirect()->route('permissions.index');
     }
 
     /**
@@ -51,7 +56,7 @@ class permissionsController extends Controller
      */
     public function show(Permission $permission)
     {
-        //
+        return view('admin.permissions.show', compact('permission'));
     }
 
     /**
@@ -62,7 +67,7 @@ class permissionsController extends Controller
      */
     public function edit(Permission $permission)
     {
-        //
+        return view('admin.permissions.edit', compact('permission'));
     }
 
     /**
@@ -74,7 +79,9 @@ class permissionsController extends Controller
      */
     public function update(Request $request, Permission $permission)
     {
-        //
+        $permission->update($request->all());
+
+        return redirect()->route('permissions.index');
     }
 
     /**
@@ -85,6 +92,8 @@ class permissionsController extends Controller
      */
     public function destroy(Permission $permission)
     {
-        //
+        $permission->delete();
+
+        return back();
     }
 }

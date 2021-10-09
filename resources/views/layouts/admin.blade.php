@@ -127,7 +127,7 @@
                                 {{ __('Logout') }}
                             </a>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="nav-link"><i class="nav-icon fa fa-exchange-alt text-warning"></i>Password Rest</a>
+                        <a href="{{ url('change-password') }}" class="nav-link"><i class="nav-icon fa fa-exchange-alt text-warning"></i>Change Password</a>
                     </div>
                 </li>
             </ul>
@@ -178,8 +178,6 @@
                         </li>
                         @endcan
 
-
-
                         @can('admin')
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -192,7 +190,7 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="{{ route('members.create') }}" class="nav-link">
+                                    <a href="{{ url('admin/members/create') }}" class="nav-link">
 
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>New Member Registration</p>
@@ -208,11 +206,6 @@
                             </ul>
                         </li>
                         @endcan
-
-
-
-
-
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -234,7 +227,36 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <a href="{{ route('loans.index') }}" class="nav-link">
+                                    <a href="{{route('user.members.edit',Auth::user()->member_id) }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            User Profile
+
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ url('change-password') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Change Password.
+
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ route('user.withdrawers.create') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Cash Withdrawers
+
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a href="{{ route('user.loans.create') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>
                                             Loan Application
@@ -243,25 +265,20 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('loans.index') }}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Cash Withdrawers</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ route('loans.index') }}" class="nav-link">
+                                    <a href="{{ route('user') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Statement of Account</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('loans.index') }}" class="nav-link">
+                                    <a href="{{ route('user') }}" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Loan Ledger</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
+
 
                         @can('admin')
                         <li class="nav-item">
@@ -293,8 +310,6 @@
                             </ul>
                         </li>
 
-
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -322,8 +337,6 @@
                                 </li>
                             </ul>
                         </li>
-
-
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -353,8 +366,6 @@
                             </ul>
                         </li>
 
-
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -382,9 +393,6 @@
                                 </li>
                             </ul>
                         </li>
-
-
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -436,6 +444,34 @@
                                     <a href="#" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Manage Comodities</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Approval Bin
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+
+                                <li class="nav-item">
+                                    <a href="{{ route('loanapprovalbin.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Loans Approval bin
+                                        </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('withdrawerapproval.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>
+                                            Approve Withdrawers
+                                        </p>
                                     </a>
                                 </li>
                             </ul>
@@ -497,6 +533,43 @@
                         </li>
 
                         <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-copy"></i>
+                                <p>
+                                    Approval Processes
+                                    <i class="fas fa-angle-left right"></i>
+
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('approval_stages.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Approval Stages</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('process_module.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Modules</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('approval_flow.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Approval Flow</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('approval_master.index') }}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Approval Master</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
                             <a href="#" class="nav-link
                                 @if ($segment=='setups' ) active @endif">
                                 <i class="nav-icon fas fa-copy"></i>
@@ -538,9 +611,27 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ route('margin_search') }}" class="nav-link">
+                                    <a href="{{ route('receipts_search') }}" class="nav-link">
                                         <i class=" far fa-circle nav-icon"></i>
                                         <p>Receipts Report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('deductions_search') }}" class="nav-link">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Monthly Deductions</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('deductions_search') }}" class="nav-link">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Statement of Accounts</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('deductions_search') }}" class="nav-link">
+                                        <i class=" far fa-circle nav-icon"></i>
+                                        <p>Membership Charges</p>
                                     </a>
                                 </li>
 
@@ -618,7 +709,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link
+                                    <a href="{{route('permissions.index')}}" class="nav-link
                                         @if ($segment=='setups' ) active @endif ">
                                         <i class=" far fa-circle nav-icon"></i>
                                         <p>Role Permission</p>
@@ -628,10 +719,6 @@
                             </ul>
                         </li>
                         @endcan
-
-
-
-
 
                         <li class="nav-header">Action</li>
                         <li class="nav-item">
